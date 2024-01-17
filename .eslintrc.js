@@ -14,6 +14,7 @@ module.exports = {
     'prettier/prettier': [
       'error',
       {
+        endOfLine: 'auto',
         singleQuote: true,
         semi: true,
         useTabs: false,
@@ -27,4 +28,4 @@ module.exports = {
   parserOptions: {
     parser: '@typescript-eslint/parser',
   },
-}
+};

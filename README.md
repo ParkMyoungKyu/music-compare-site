@@ -11,16 +11,9 @@
 2. 타입스크립트 기본 환경 구성
     - [x] NPM 초기화 (npm init)
     - [x] 타입스크립트 및 문법 검사, 코드 정리 도구 라이브러리 설치 
+    - typescript, babel, eslint, prettier
     ```sh
-    npm i -D typescript 
-             @babel/core 
-             @babel/preset-env 
-             @babel/preset-typescript 
-             @typescript-eslint/eslint-plugin 
-             @typescript-eslint/parser 
-             eslint 
-             prettier 
-             eslint-plugin-prettier
+    npm i -D typescript @babel/core @babel/preset-env @babel/preset-typescript @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint prettier eslint-plugin-prettier
     ```
 
     - [x] 타입스크립트 설정 파일 생성 및 기본 값 추가 (tsconfig.json)
