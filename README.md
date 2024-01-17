@@ -13,8 +13,10 @@
     - [x] 타입스크립트 라이브러리 설치 (npm i typescript)
     - [x] 타입스크립트 설정 파일 생성 및 기본 값 추가 (tsconfig.json)
     - [x] 자바스크립트 파일을 타입스크립트 파일로 변환 (app.js -> app.ts)
+    - [x] `tsc` 명령어로 타입스크립트 컴파일 하기
 
-
+3. 타입스크립트 명시적인 any 선언하기
+    - `tsconfig.json` 파일에   `noImplicitAny: true` 값을 `true` 로 추가
 
 
 

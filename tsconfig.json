@@ -3,7 +3,9 @@
         "allowJs": true,
         "target": "ES5",
         "outDir": "./dist",
-        "moduleResolution": "Classic"
+        "moduleResolution": "Node",
+        "noImplicitAny": true,
+        "lib": ["ES2015","DOM","DOM.Iterable"] 
     },
     "include": ["./src/**/*"]
 }
