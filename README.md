@@ -28,8 +28,8 @@
 4. 프로젝트 환경 구성
     - bebel, eslint, prettier 등의 환경 설정
 
-
-
+5. 외부 라이브러리 모듈화
+    - axios, Chart 라이브러리 설치 및 import 추가
 
 ---
 

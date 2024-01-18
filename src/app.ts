@@ -1,3 +1,10 @@
+// 라이브러리 로딩
+// import 변수명 from '라이브러리 이름'
+// 변수, 함수 임포트 문법
+// import {} from '파일 상대 경로'
+import axios from 'axios';
+import { Chart } from 'chart.js';
+
 // utils -> DOM 접근 공통 함수
 function $(selector: string) {
   return document.querySelector(selector);
@@ -7,7 +14,7 @@ function getUnixTimestamp(date: Date | string | number): number {
 }
 
 // DOM
-let a: Element | HTMLElement | HTMLParagraphElement;
+// let a: Element | HTMLElement | HTMLParagraphElement;
 const confirmedTotal = $('.confirmed-total') as HTMLSpanElement;
 // HTMLParagraphElemnt 타입정의시 Element와 1:1맵핑이 안된다고 오류가 뜬다
 // const deathsTotal:HTMLParagraphElement = $('.deaths');
@@ -190,7 +197,7 @@ async function setupData() {
 }
 
 function renderChart(data: any, labels: any) {
-  const ctx = $('#lineChart').getContext('2d');
+  const ctx = $('#lineChart').getContext('2d') as Chart;
   Chart.defaults.color = '#f5eaea';
   Chart.defaults.font.family = 'Exo 2';
   new Chart(ctx, {
