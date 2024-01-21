@@ -27,8 +27,8 @@ function setTodaArtistList(data: todayMusicRes) {
   console.log(musicList);
   musicList.forEach((value: todayMusicResDataList) => {
     const aTag = document.createElement('a');
-    aTag.setAttribute('class', 'group');
     aTag.setAttribute('href', '#');
+    aTag.setAttribute('class', 'group');
 
     const divTag = document.createElement('div');
     divTag.setAttribute(
@@ -56,8 +56,16 @@ function setTodaArtistList(data: todayMusicRes) {
     aTag.appendChild(h3Tag);
     aTag.appendChild(pTag);
 
-    todayList?.appendChild(aTag);
+    todayList.appendChild(aTag);
   });
 }
 
+function initEvents() {
+  todayList.addEventListener('click', musicSelected);
+}
+
+function musicSelected(event: Event) {
+  console.log(event.target);
+}
 setupData();
+initEvents();

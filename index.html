@@ -7,7 +7,34 @@
     <link href="https://fonts.googleapis.com/css?family=Exo+2&display=swap" rel="stylesheet" />
   </head>
   <body>
-    <div class="bg-white py-24 sm:py-32">
+    <header class="bg-white">
+      <nav class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
+        <div class="flex lg:flex-1">
+          <a href="#" class="-m-1.5 p-1.5">
+            <span class="sr-only">Your Company</span>
+            <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="">
+          </a>
+        </div>
+        <div class="flex lg:hidden">
+          <button type="button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700">
+            <span class="sr-only">Open main menu</span>
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            </svg>
+          </button>
+        </div>
+        <div class="hidden lg:flex lg:gap-x-12">
+          <a href="#" class="text-sm font-semibold leading-6 text-gray-900">오늘 발매 음악</a>
+          <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Top 100</a>
+          <a href="#" class="text-sm font-semibold leading-6 text-gray-900">장르별 음악</a>
+          <a href="#" class="text-sm font-semibold leading-6 text-gray-900">차트비교</a>
+        </div>
+        <div class="hidden lg:flex lg:flex-1 lg:justify-end">
+          
+        </div>
+      </nav>
+    </header>
+    <div class="bg-white py-12 sm:py-12">
       <div class="mx-auto max-w-7xl px-6 lg:px-8">
         <h2 class="text-center text-2xl font-extrabold leading-8 text-gray-900">Today's Released Music</h2>
         <div class="mx-auto mt-10 grid max-w-lg grid-cols-4 items-center gap-x-8 gap-y-10 sm:max-w-xl sm:grid-cols-6 sm:gap-x-10 lg:mx-0 lg:max-w-none lg:grid-cols-5">

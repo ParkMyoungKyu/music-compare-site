@@ -37,6 +37,7 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
+    "alpinejs": "^3.13.3",
     "axios": "^1.6.5",
     "chart.js": "^4.4.1",
     "class-variance-authority": "^0.7.0",
