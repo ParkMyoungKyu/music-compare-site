@@ -32,10 +32,15 @@
     - axios, Chart 라이브러리 설치 및 import 추가
 
 6. `strict`옵션 추가 후 타입 정의
-    - 
+    - 좀더 타이트한 타입정의를 위한 옵션
 ---
 
+####그동안 배웠던걸 바탕으로 개별프로젝트 (음원차트비교 사이트) 로 전환 시작
 
+7. tailwind, postcss 추가
+    - 개별로 실행 후 webpack으로 한번에 돌리는 방향으로 수정
+    - shadcn/ui 도 점진적으로 하나씩 붙여볼 예정
+---
 
 #### 참고 자료
 - [FLO](https://music.bugs.co.kr/chart)
