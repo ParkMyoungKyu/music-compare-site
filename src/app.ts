@@ -4,6 +4,7 @@
 // import {} from '파일 상대 경로'
 import axios, { AxiosResponse } from 'axios';
 import { Chart } from 'chart.js';
+import './styles/tailwind.css';
 
 // 타입 모듈
 import {
@@ -11,7 +12,7 @@ import {
   CovidSummaryResponse,
   Country,
   CountrySummaryInfo,
-} from './covid/index';
+} from './music/index';
 
 // utils -> DOM 접근 공통 함수
 // <T extends HTMLElement = HTMLDivElement> 라고 하면
@@ -213,10 +214,10 @@ function endLoadingAnimation() {
 async function setupData() {
   const { data } = await fetchCovidSummary();
   setTotalConfirmedNumber(data);
-  setTotalDeathsByWorld(data);
-  setTotalRecoveredByWorld(data);
-  setCountryRanksByConfirmedCases(data);
-  setLastUpdatedTimestamp(data);
+  // setTotalDeathsByWorld(data);
+  // setTotalRecoveredByWorld(data);
+  // setCountryRanksByConfirmedCases(data);
+  // setLastUpdatedTimestamp(data);
 }
 
 function renderChart(data: number[], labels: string[]) {
@@ -224,6 +225,9 @@ function renderChart(data: number[], labels: string[]) {
   const lineChart = $('#lineChart') as HTMLCanvasElement;
 
   const ctx = lineChart.getContext('2d');
+  if (!ctx) {
+    return;
+  }
   // CAET 02
   // const ctx = ($('#lineChart') as HTMLCanvasElement).getContext('2d');
   Chart.defaults.color = '#f5eaea';

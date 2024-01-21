@@ -42,3 +42,44 @@ export interface CountrySummaryInfo {
 }
 
 export type CountrySummaryResponse = CountrySummaryInfo[];
+
+// 여기부터는 음악가져오기 interface
+export interface todayMusicRes {
+  code: string;
+  data: todayMusicResData;
+  traceId: string;
+}
+
+interface todayMusicResData {
+  currentPage: number;
+  lastPageYn: string;
+  list: todayMusicResDataList[];
+  name: string;
+  totalCount: number;
+}
+
+interface imgList {
+  size: number;
+  url: string;
+}
+
+interface artistInfo {
+  id: number;
+  name: string;
+}
+
+export interface todayMusicResDataList {
+  albumLabelList: object[];
+  albumType: string;
+  albumTypeStr: string;
+  artistList: Array<artistInfo>;
+  availableSizeList: Array<number>;
+  categoryType: string;
+  genreStyle: string;
+  id: number;
+  imgList: Array<imgList>;
+  imgUrlFormat: string;
+  releaseYmd: string;
+  representationArtist: object;
+  title: string;
+}

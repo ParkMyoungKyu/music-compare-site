@@ -4,56 +4,62 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>음악 차트 비교</title>
-    <link
-      href="https://fonts.googleapis.com/css?family=Exo+2&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="./main.css" />
+    <link href="https://fonts.googleapis.com/css?family=Exo+2&display=swap" rel="stylesheet" />
   </head>
   <body>
-    <header class="flex justify-center">
-      <h1>음악 차트 비교</h1>
-    </header>
-    <main class="flex">
-      <div class="left-panel flex column">
-        <div class="total-board">
-          <p>Total Confirmed</p>
-          <span class="confirmed-total"></span>
-        </div>
-        <div class="country-ranks">
-          <p>Confirmed Cases by Country</p>
-          <ol class="rank-list"></ol>
-        </div>
-        <p class="last-updated-time flex justify-center align-center"></p>
-      </div>
-      <div class="right-panel">
-        <div class="summary-wrapper flex">
-          <div class="deaths-container">
-            <h3 class="summary-title">Total Deaths</h3>
-            <p class="total deaths">0</p>
-            <div class="list-wrapper">
-              <ol class="deaths-list"></ol>
-            </div>
-          </div>
-          <div class="recovered-container">
-            <h3 class="summary-title">Total Recovered</h3>
-            <p class="total recovered">0</p>
-            <div class="list-wrapper">
-              <ol class="recovered-list"></ol>
-            </div>
-          </div>
-        </div>
-        <div class="chart-container">
-          <canvas
-            id="lineChart"
-            class="corona-chart"
-            style="width: 100%; height: 356px; background-color: #5b5656;"
-          ></canvas>
+    <div class="bg-white py-24 sm:py-32">
+      <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <h2 class="text-center text-2xl font-extrabold leading-8 text-gray-900">Today's Released Music</h2>
+        <div class="mx-auto mt-10 grid max-w-lg grid-cols-4 items-center gap-x-8 gap-y-10 sm:max-w-xl sm:grid-cols-6 sm:gap-x-10 lg:mx-0 lg:max-w-none lg:grid-cols-5">
+          <img class="col-span-2  w-full object-contain lg:col-span-1" src="./src/styles/images/melon.png" alt="melon" width="158" height="48">
+          <img class="col-span-2  w-full object-contain lg:col-span-1" src="./src/styles/images/genie.jpg" alt="genie" width="158" height="48">
+          <img class="col-span-2  w-full object-contain lg:col-span-1" src="./src/styles/images/flo.png" alt="flo" width="158" height="48">
+          <img class="col-span-2  w-full object-contain sm:col-start-2 lg:col-span-1" src="./src/styles/images/vibe.jpg" alt="vibe" width="158" height="48">
+          <img class="col-span-2 col-start-2  w-full object-contain sm:col-start-auto lg:col-span-1" src="./src/styles/images/bugs.jpg" alt="bugs" width="158" height="48">
         </div>
       </div>
-    </main>
+    </div>
+
+    <div class="bg-white">
+      <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+        <h2 class="sr-only">Products</h2>
+    
+        <div class="todayList grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 xl:gap-x-8">
+          <!-- <a href="#" class="group">
+            <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
+              <img src="https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg" alt="Tall slender porcelain bottle with natural clay textured body and cork stopper." class="h-full w-full object-cover object-center group-hover:opacity-75">
+            </div>
+            <h3 class="mt-4 text-sm text-gray-700">Earthen Bottle</h3>
+            <p class="mt-1 text-lg font-medium text-gray-900">$48</p>
+          </a>
+          <a href="#" class="group">
+            <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
+              <img src="https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-02.jpg" alt="Olive drab green insulated bottle with flared screw lid and flat top." class="h-full w-full object-cover object-center group-hover:opacity-75">
+            </div>
+            <h3 class="mt-4 text-sm text-gray-700">Nomad Tumbler</h3>
+            <p class="mt-1 text-lg font-medium text-gray-900">$35</p>
+          </a>
+          <a href="#" class="group">
+            <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
+              <img src="https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-03.jpg" alt="Person using a pen to cross a task off a productivity paper card." class="h-full w-full object-cover object-center group-hover:opacity-75">
+            </div>
+            <h3 class="mt-4 text-sm text-gray-700">Focus Paper Refill</h3>
+            <p class="mt-1 text-lg font-medium text-gray-900">$89</p>
+          </a>
+          <a href="#" class="group">
+            <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
+              <img src="https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg" alt="Hand holding black machined steel mechanical pencil with brass tip and top." class="h-full w-full object-cover object-center group-hover:opacity-75">
+            </div>
+            <h3 class="mt-4 text-sm text-gray-700">Machined Mechanical Pencil</h3>
+            <p class="mt-1 text-lg font-medium text-gray-900">$35</p>
+          </a> -->
+    
+          <!-- More products... -->
+        </div>
+      </div>
+    </div>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-    <script src="./dist/app.js"></script>
+    <script src="./dist/index.js"></script>
   </body>
 </html>
