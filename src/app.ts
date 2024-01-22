@@ -12,7 +12,7 @@ import {
   CovidSummaryResponse,
   Country,
   CountrySummaryInfo,
-} from './music/index';
+} from './models/index';
 
 // utils -> DOM 접근 공통 함수
 // <T extends HTMLElement = HTMLDivElement> 라고 하면
