@@ -52,7 +52,7 @@ export interface albumInfoResList {
 }
 
 interface albumDetail {
-  albumLabelList: Array<string>;
+  albumLabelList: albumLabelList[];
   albumType: string;
   albumTypeStr: string;
   genreStyle: string;
@@ -60,6 +60,12 @@ interface albumDetail {
   imgList: Array<imgList>;
   releaseYmd: string;
   title: string;
+}
+
+interface albumLabelList {
+  dispSn: number;
+  labelId: number;
+  labelNm: string;
 }
 
 export interface albumInfoDetail {
