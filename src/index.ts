@@ -25,7 +25,7 @@ const displayComponents = (...components: string[]): void => {
 };
 
 // 초기 컴포넌트 표시
-displayComponents(Header()); // 왜 못찾지...
+displayComponents(Header());
 
 function $<T extends HTMLElement>(selector: string) {
   const element = document.querySelector(selector);

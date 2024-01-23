@@ -9,6 +9,8 @@
       "esModuleInterop": true,
       "typeRoots": ["./node_modules/@types", "./types"],
       "strict": true,
+      // "allowImportingTsExtensions": true,
+      // "noEmit": true
     },
     "include": ["./src/**/*"]
   }
