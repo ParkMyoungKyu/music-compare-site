@@ -1,4 +1,4 @@
-class DateUtils {
+export class DateUtils {
   date: string;
   format: string;
 

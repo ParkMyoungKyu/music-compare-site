@@ -14,7 +14,10 @@ import {
 } from './models/todayAlbum';
 
 // components
-import { Header } from './components/header';
+import { Header } from './components/Header';
+import { MusicSite } from './components/MusicSiteList';
+import { RecentMusic } from './components/RecentMusicList';
+import { Footer } from './components/Footer';
 
 // 화면에 출력하는 함수
 const displayComponents = (...components: string[]): void => {
@@ -23,9 +26,15 @@ const displayComponents = (...components: string[]): void => {
     appDiv.innerHTML = components.join('');
   }
 };
-
+const RecentMusicList = new RecentMusic();
+const Bottom = new Footer();
 // 초기 컴포넌트 표시
-displayComponents(Header());
+displayComponents(
+  Header(),
+  MusicSite(),
+  RecentMusicList.render(),
+  Bottom.render(),
+);
 
 function $<T extends HTMLElement>(selector: string) {
   const element = document.querySelector(selector);
