@@ -9,15 +9,16 @@ import axios, { AxiosResponse } from 'axios';
 import {
   albumInfoDetail,
   albumInfoRes,
-  todayAlbumRes,
-  todayAlbumResDataList,
+  // todayAlbumRes,
+  // todayAlbumResDataList,
 } from './models/todayAlbum';
 
 // components
 import { Header } from './components/Header';
-import { MusicSite } from './components/MusicSiteList';
-import { RecentMusic } from './components/RecentMusicList';
+import { MusicSite, MusicSiteName } from './components/MusicSiteList';
+import { RecentMusic, RecentMusicList } from './components/RecentMusicList';
 import { Footer } from './components/Footer';
+import { $, tagCreat } from './utils/ElementUtils';
 
 // 화면에 출력하는 함수
 const displayComponents = (...components: string[]): void => {
@@ -26,78 +27,19 @@ const displayComponents = (...components: string[]): void => {
     appDiv.innerHTML = components.join('');
   }
 };
-const RecentMusicList = new RecentMusic();
+const RecentMusicInfo = new RecentMusic();
+
 const Bottom = new Footer();
 // 초기 컴포넌트 표시
 displayComponents(
   Header(),
   MusicSite(),
-  RecentMusicList.render(),
+  RecentMusicInfo.render(),
   Bottom.render(),
 );
 
-function $<T extends HTMLElement>(selector: string) {
-  const element = document.querySelector(selector);
-  return element as T;
-}
-
-function tagCreat<T extends HTMLElement>(tagCreat: string) {
-  const tag = document.createElement(tagCreat);
-  return tag as T;
-}
-
+new RecentMusicList(MusicSiteName.flo, 'KPOP');
 const todayAlbumList = $<HTMLDivElement>('.todayList');
-
-// 오늘 발매 앨범
-function todayAlbumRequest(): Promise<AxiosResponse<todayAlbumRes>> {
-  const url = 'https://www.music-flo.com/api/meta/v1/album/ALL/new';
-  return axios.get(url);
-}
-
-async function setupData() {
-  const { data } = await todayAlbumRequest();
-  setTodaArtistList(data);
-}
-
-function setTodaArtistList(data: todayAlbumRes) {
-  const AlbumList = data.data.list;
-
-  AlbumList.forEach((value: todayAlbumResDataList) => {
-    const aTag = document.createElement('div');
-    aTag.setAttribute('style', 'cursor:pointer');
-    aTag.setAttribute('class', 'group');
-    aTag.setAttribute('id', value.id.toString());
-
-    const divTag = document.createElement('div');
-    divTag.setAttribute(
-      'class',
-      'aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7',
-    );
-
-    const imgTag = document.createElement('img');
-    imgTag.setAttribute(
-      'class',
-      'h-full w-full object-cover object-center group-hover:opacity-75 drop-shadow-xl',
-    );
-    imgTag.setAttribute('src', value.imgList[5].url);
-    imgTag.setAttribute('x-on:click', 'isPopup = true');
-    divTag.appendChild(imgTag);
-
-    const h3Tag = document.createElement('h3');
-    h3Tag.setAttribute('class', 'mt-4 text-sm text-gray-700');
-    h3Tag.textContent = value.title;
-
-    const pTag = document.createElement('p');
-    pTag.setAttribute('class', 'mt-1 text-lg font-medium text-gray-900');
-    pTag.textContent = value.artistList[0].name;
-
-    aTag.appendChild(divTag);
-    aTag.appendChild(h3Tag);
-    aTag.appendChild(pTag);
-
-    todayAlbumList.appendChild(aTag);
-  });
-}
 
 function initEvents() {
   todayAlbumList.addEventListener('click', musicSelected);
@@ -233,5 +175,4 @@ function albumMusicList(data: Array<albumInfoDetail>) {
     ulTage.append(liTag);
   });
 }
-setupData();
 initEvents();
