@@ -1,6 +1,6 @@
 import { RecentMusicPopup } from './RecentMusicDetail';
 import { MusicSiteName } from './MusicSiteList';
-import { MusicAxios } from './../utils/MusicAxios';
+import { RecentAlbumAxios } from './../utils/MusicAxios';
 import { $ } from '../utils/ElementUtils';
 import { todayAlbumRes, todayAlbumResDataList } from '../models/todayAlbum';
 
@@ -13,7 +13,7 @@ export class RecentMusicList {
     this.chartGbn = chartGbn;
 
     let callUrl: string = ''; // axios 호출 url
-
+    console.log('2');
     if (musicSite === MusicSiteName.melon) {
       console.log('melon Start');
     } else if (musicSite === MusicSiteName.genie) {
@@ -47,12 +47,12 @@ function chartGbnUrl(gubun: string): string {
 
 // 최근 발매 앨범 API 호출
 async function setupData(callUrl: string) {
-  const { data } = await MusicAxios(callUrl);
-  setTodaArtistList(data);
+  const { data } = await RecentAlbumAxios(callUrl);
+  setRecentAlbumList(data);
 }
 
 // 최근 발매 앨범 데이터 셋팅
-function setTodaArtistList(data: todayAlbumRes) {
+function setRecentAlbumList(data: todayAlbumRes) {
   const AlbumList = data.data.list;
 
   AlbumList.forEach((value: todayAlbumResDataList) => {
@@ -99,7 +99,7 @@ export class RecentMusic {
     const RecentMusicPopupComponent = new RecentMusicPopup();
     return `
     <div class="bg-white" x-data="{ isPopup: false }">
-      <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+      <div class="mx-auto max-w-2xl px-4 py-8 sm:px-6 sm:py-8 lg:max-w-7xl lg:px-8">
         <h2 class="sr-only">Products</h2>
         <div class="todayList grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 xl:gap-x-8"></div>
       </div>  

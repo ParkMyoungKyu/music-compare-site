@@ -5,6 +5,11 @@ export function tagCreat<T extends HTMLElement>(tagCreat: string) {
 }
 // 요소 선택
 export function $<T extends HTMLElement>(selector: string) {
-  const element = document.querySelector(selector);
+  const element = document.querySelector(selector); // id
+  return element as T;
+}
+
+export function selectAll<T extends NodeListOf<HTMLElement>>(selector: string) {
+  const element = document.querySelectorAll(selector);
   return element as T;
 }
