@@ -1,7 +1,7 @@
 import { RecentMusicPopup } from './RecentMusicDetail';
 import { MusicSiteName } from './MusicSiteList';
 import { RecentAlbumAxios } from './../utils/MusicAxios';
-import { $ } from '../utils/ElementUtils';
+import { select } from '../utils/ElementUtils';
 import { todayAlbumRes, todayAlbumResDataList } from '../models/todayAlbum';
 
 export class RecentMusicList {
@@ -13,7 +13,7 @@ export class RecentMusicList {
     this.chartGbn = chartGbn;
 
     let callUrl: string = ''; // axios 호출 url
-    console.log('2');
+
     if (musicSite === MusicSiteName.melon) {
       console.log('melon Start');
     } else if (musicSite === MusicSiteName.genie) {
@@ -55,9 +55,10 @@ async function setupData(callUrl: string) {
 function setRecentAlbumList(data: todayAlbumRes) {
   const AlbumList = data.data.list;
 
-  AlbumList.forEach((value: todayAlbumResDataList) => {
-    const todayAlbumList = $<HTMLDivElement>('.todayList');
+  const todayAlbumList = select<HTMLDivElement>('.todayList');
+  todayAlbumList.innerHTML = ''; // 화면 초기화
 
+  AlbumList.forEach((value: todayAlbumResDataList) => {
     const aTag = document.createElement('div');
     aTag.setAttribute('style', 'cursor:pointer');
     aTag.setAttribute('class', 'group');

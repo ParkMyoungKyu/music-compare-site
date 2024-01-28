@@ -4,7 +4,7 @@ export function tagCreat<T extends HTMLElement>(tagCreat: string) {
   return tag as T;
 }
 // 요소 선택
-export function $<T extends HTMLElement>(selector: string) {
+export function select<T extends HTMLElement>(selector: string) {
   const element = document.querySelector(selector); // id
   return element as T;
 }

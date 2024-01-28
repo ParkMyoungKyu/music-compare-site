@@ -1,5 +1,5 @@
 import { albumInfoDetail, albumInfoRes } from '../models/todayAlbum';
-import { $, tagCreat } from '../utils/ElementUtils';
+import { select, tagCreat } from '../utils/ElementUtils';
 import { AlbumListAxios } from './../utils/MusicAxios';
 
 import { DateUtils, DateFormat } from './../utils/dateUtils';
@@ -40,11 +40,12 @@ async function setupData(callUrl: string) {
 
 function setAlbumInfo(data: albumInfoRes) {
   const albumList = data.data.list;
+
   const titleAlbum = albumList.filter(value => value.titleYn == 'Y');
   const titleAlbumInfo = titleAlbum[0];
 
   // 이미지 초기화
-  const titleImg = $<HTMLDivElement>('#titleImg');
+  const titleImg = select<HTMLDivElement>('#titleImg');
   titleImg.innerHTML = '';
 
   const imgTag = tagCreat('img');
@@ -54,27 +55,29 @@ function setAlbumInfo(data: albumInfoRes) {
   imgTag.setAttribute('src', imgUrl);
 
   // 앨범 타입
-  const albumType = $<HTMLElement>('#albumType');
+  const albumType = select<HTMLElement>('#albumType');
   albumType.innerText = '[' + titleAlbumInfo.album.albumTypeStr + ']';
   // 앨범 명
-  const albumName = $<HTMLElement>('#albumName');
+  const albumName = select<HTMLElement>('#albumName');
   albumName.innerText = titleAlbumInfo.album.title;
   // 가수 명
-  const artistName = $<HTMLParagraphElement>('#artistName');
+  const artistName = select<HTMLParagraphElement>('#artistName');
   artistName.innerText = titleAlbumInfo.artistList[0].name;
   // 발매일
-  const releaseYmd = $<HTMLElement>('#releaseYmd');
+  const releaseYmd = select<HTMLElement>('#releaseYmd');
 
   releaseYmd.innerText = dataUtil.dateformat(
     titleAlbumInfo.album.releaseYmd,
     DateFormat.yyyymmdd,
   );
   // 장르
-  const genreStyle = $<HTMLElement>('#genreStyle');
+  const genreStyle = select<HTMLElement>('#genreStyle');
   genreStyle.innerText = titleAlbumInfo.album.genreStyle;
   // 기획사
-  const labelNm = $<HTMLElement>('#labelNm');
-  labelNm.innerText = titleAlbumInfo.album.albumLabelList[0].labelNm;
+  const labelNm = select<HTMLElement>('#labelNm');
+  labelNm.innerText = titleAlbumInfo.album.albumLabelList[0]
+    ? titleAlbumInfo.album.albumLabelList[0].labelNm
+    : '-';
   // 이미지 삽입
   titleImg.appendChild(imgTag);
 
@@ -83,7 +86,7 @@ function setAlbumInfo(data: albumInfoRes) {
 
 // 앨범 수록곡 목록 출력
 function albumMusicList(data: Array<albumInfoDetail>) {
-  const ulTage = $('#albumList');
+  const ulTage = select('#albumList');
   // 목록 초기화
   if (ulTage.childElementCount > 0) {
     ulTage.innerText = '';
