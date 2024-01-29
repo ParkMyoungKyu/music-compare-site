@@ -1,3 +1,6 @@
+import { RecentMusicList } from '../pages/Recent/RecentMusicList';
+import { selectAll } from '../utils/ElementUtils';
+
 // 음악사이트는 정해져있기 때문에 문자형 enum 을 사용해 5가지만 사용한다고 정의함
 export enum MusicSiteName {
   melon = 'melon',
@@ -7,7 +10,15 @@ export enum MusicSiteName {
   bugs = 'bugs',
 }
 
-export class MusicSite {
+export class MusicSiteList {
+  musicSite: MusicSiteName;
+  category: string;
+  constructor(musicSite: MusicSiteName, category: string) {
+    this.musicSite = musicSite;
+    this.category = category;
+
+    this.categoryMoveEvent(musicSite, category);
+  }
   render(): string {
     return `
       <div class="bg-white py-12 sm:py-12">
@@ -28,5 +39,14 @@ export class MusicSite {
         <button type="button" value="POP"  class="categoryBtn py-2 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">POP</button>
       </div>
     `;
+  }
+  categoryMoveEvent(musicSite: MusicSiteName, category: string) {
+    const categoryBtn =
+      selectAll<NodeListOf<HTMLButtonElement>>('.categoryBtn');
+    categoryBtn.forEach((button: HTMLButtonElement) => {
+      button.addEventListener('click', function () {
+        new RecentMusicList(musicSite, button.value);
+      });
+    });
   }
 }

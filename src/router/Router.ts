@@ -1,12 +1,14 @@
 import { RecentMusic } from '../pages/Recent/RecentMusicList';
 import { NotFound } from '../pages/NotFound/NotFound';
+
+// 페이지 타입
 type Page = RecentMusic | NotFound;
 
-class Router {
+export class Router {
   private routes: { [key: string]: new () => Page } = {};
   constructor() {
     this.routes = {
-      '/recent': RecentMusic,
+      '/': RecentMusic,
     };
   }
 
@@ -17,21 +19,11 @@ class Router {
   }
 
   renderPage(page: Page): void {
-    const appDiv = document.getElementById('app');
+    const appDiv = document.getElementById('body');
     if (appDiv) {
       appDiv.innerHTML = page.render();
     }
   }
 }
 
-const router = new Router();
-
-window.addEventListener('load', () => {
-  router.navigateTo(window.location.pathname);
-});
-
-window.addEventListener('popstate', () => {
-  router.navigateTo(window.location.pathname);
-});
-
-export default router;
+export default Router;

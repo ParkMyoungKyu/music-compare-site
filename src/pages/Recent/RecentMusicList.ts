@@ -1,4 +1,4 @@
-import { RecentMusicPopup } from './RecentMusicDetail';
+import { MusicSelectedInfo, RecentMusicPopup } from './RecentMusicDetail';
 import { MusicSiteName } from '../../components/MusicSiteList';
 import { RecentAlbumAxios } from '../../utils/MusicAxios';
 import { select } from '../../utils/ElementUtils';
@@ -58,6 +58,10 @@ function setRecentAlbumList(data: todayAlbumRes) {
   const todayAlbumList = select<HTMLDivElement>('.todayList');
   todayAlbumList.innerHTML = ''; // 화면 초기화
 
+  // 버튼 이벤트 생성
+  const musicSelectedInfo = new MusicSelectedInfo();
+  todayAlbumList.onclick = musicSelectedInfo.musicSelected;
+
   AlbumList.forEach((value: todayAlbumResDataList) => {
     const aTag = document.createElement('div');
     aTag.setAttribute('style', 'cursor:pointer');
@@ -97,6 +101,8 @@ function setRecentAlbumList(data: todayAlbumRes) {
 
 export class RecentMusic {
   render(): string {
+    new RecentMusicList(MusicSiteName.flo, 'ALL');
+
     const RecentMusicPopupComponent = new RecentMusicPopup();
     return `
     <div class="bg-white" x-data="{ isPopup: false }">

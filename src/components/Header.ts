@@ -1,7 +1,3 @@
-import { RecentMusic } from '../pages/Recent/RecentMusicList';
-import { selectAll } from '../utils/ElementUtils';
-type Page = RecentMusic;
-
 export class Header {
   render(): string {
     return `
@@ -36,36 +32,4 @@ export class Header {
       </header>
   `;
   }
-  // 페이지 간 이동을 처리하는 메서드
-  navigateToAbout(page: string): void {
-    // URL 변경
-    window.history.pushState({}, page, `/${page}`);
-    // About 페이지 렌더링
-    renderPage(new RecentMusic());
-  }
-
-  initialize(): void {
-    // 버튼에 이벤트 리스너 바인딩
-    const titleBtn = selectAll<NodeListOf<HTMLButtonElement>>('.titleBtn');
-    titleBtn.forEach((button: HTMLButtonElement) => {
-      button.addEventListener('click', () =>
-        this.navigateToAbout(button.value),
-      );
-    });
-  }
 }
-
-// 렌더링 함수
-function renderPage(page: Page): void {
-  const appDiv: HTMLElement | null = document.getElementById('app');
-  if (appDiv) {
-    appDiv.innerHTML = page.render();
-  }
-}
-
-// 초기 페이지 로딩 시 Home 페이지 렌더링과 초기화 메서드 호출
-window.addEventListener('load', () => {
-  const homePage = new Header();
-  renderPage(homePage);
-  homePage.initialize();
-});
