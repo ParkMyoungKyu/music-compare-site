@@ -1,8 +1,8 @@
 import { RecentMusicPopup } from './RecentMusicDetail';
-import { MusicSiteName } from './MusicSiteList';
-import { RecentAlbumAxios } from './../utils/MusicAxios';
-import { select } from '../utils/ElementUtils';
-import { todayAlbumRes, todayAlbumResDataList } from '../models/todayAlbum';
+import { MusicSiteName } from '../../components/MusicSiteList';
+import { RecentAlbumAxios } from '../../utils/MusicAxios';
+import { select } from '../../utils/ElementUtils';
+import { todayAlbumRes, todayAlbumResDataList } from '../../models/todayAlbum';
 
 export class RecentMusicList {
   musicSite: MusicSiteName;

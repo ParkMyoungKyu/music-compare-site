@@ -6,12 +6,11 @@ import Alpine from 'alpinejs';
 Alpine.start();
 
 // components
-
 import { Header } from './components/Header';
 import { MusicSite, MusicSiteName } from './components/MusicSiteList';
-import { RecentMusic, RecentMusicList } from './components/RecentMusicList';
+import { RecentMusic, RecentMusicList } from './pages/Recent/RecentMusicList';
 
-import { MusicSelectedInfo } from './components/RecentMusicDetail';
+import { MusicSelectedInfo } from './pages/Recent/RecentMusicDetail';
 import { Footer } from './components/Footer';
 import { select, selectAll } from './utils/ElementUtils';
 

@@ -1,8 +1,8 @@
-import { albumInfoDetail, albumInfoRes } from '../models/todayAlbum';
-import { select, tagCreat } from '../utils/ElementUtils';
-import { AlbumListAxios } from './../utils/MusicAxios';
+import { albumInfoDetail, albumInfoRes } from '../../models/todayAlbum';
+import { select, tagCreat } from '../../utils/ElementUtils';
+import { AlbumListAxios } from '../../utils/MusicAxios';
 
-import { DateUtils, DateFormat } from './../utils/dateUtils';
+import { DateUtils, DateFormat } from '../../utils/DateUtils';
 const dataUtil = new DateUtils();
 
 export class MusicSelectedInfo {
