@@ -1,10 +1,16 @@
 export class NotFound {
+  constructor() {
+    const head: HTMLCollectionOf<HTMLHeadElement> =
+      document.getElementsByTagName('head');
+    const body: HTMLCollectionOf<HTMLBodyElement> =
+      document.getElementsByTagName('body');
+    if (head && body) {
+      head[0].setAttribute('class', 'h-full');
+      body[0].setAttribute('class', 'h-full');
+    }
+  }
   render(): string {
     return `
-      
-      // <html class="h-full">
-      // <body class="h-full">
-      
     <main class="grid min-h-full place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8">
       <div class="text-center">
         <p class="text-base font-semibold text-indigo-600">404</p>
@@ -16,8 +22,6 @@ export class NotFound {
         </div>
       </div>
     </main>
-
-    
     `;
   }
 }

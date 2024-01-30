@@ -1,3 +1,6 @@
+import Router from '../router/Router';
+import { selectAll } from '../utils/ElementUtils';
+
 export class Header {
   render(): string {
     return `
@@ -22,7 +25,7 @@ export class Header {
           <div class="hidden lg:flex lg:gap-x-12">
             <button value="recent" class="titleBtn text-sm font-semibold leading-6 text-gray-900">오늘 발매 음악</button>
             <button value="top100" class="titleBtn text-sm font-semibold leading-6 text-gray-900">Top 100</button>
-            <button value="index"  class="titleBtn text-sm font-semibold leading-6 text-gray-900">장르별 음악</button>
+            <button value="genre"  class="titleBtn text-sm font-semibold leading-6 text-gray-900">장르별 음악</button>
             <button value="char"   class="titleBtn text-sm font-semibold leading-6 text-gray-900">차트비교</button>
           </div>
           <div class="hidden lg:flex lg:flex-1 lg:justify-end">
@@ -31,5 +34,16 @@ export class Header {
         </nav>
       </header>
   `;
+  }
+
+  // header 이동
+  headerMoveEvent() {
+    const headerBtn = selectAll<NodeListOf<HTMLButtonElement>>('.titleBtn');
+    const headerMove = new Router();
+    headerBtn.forEach((button: HTMLButtonElement) => {
+      button.addEventListener('click', () => {
+        headerMove.navigateTo('/' + button.value);
+      });
+    });
   }
 }

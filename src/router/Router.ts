@@ -1,14 +1,17 @@
 import { RecentMusic } from '../pages/Recent/RecentMusicList';
+import { GenreMusic } from '../pages/Genre/GenreMusicList';
 import { NotFound } from '../pages/NotFound/NotFound';
 
 // 페이지 타입
-type Page = RecentMusic | NotFound;
+type Page = RecentMusic | GenreMusic | NotFound;
 
 export class Router {
   private routes: { [key: string]: new () => Page } = {};
   constructor() {
     this.routes = {
-      '/': RecentMusic,
+      '/recent': RecentMusic,
+      '/genre': GenreMusic,
+      '/notFound': NotFound,
     };
   }
 
