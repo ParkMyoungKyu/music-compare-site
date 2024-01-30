@@ -1,14 +1,16 @@
+import { Main } from '../main';
 import { RecentMusic } from '../pages/Recent/RecentMusicList';
 import { GenreMusic } from '../pages/Genre/GenreMusicList';
 import { NotFound } from '../pages/NotFound/NotFound';
 
 // 페이지 타입
-type Page = RecentMusic | GenreMusic | NotFound;
+type Page = Main | RecentMusic | GenreMusic | NotFound;
 
 export class Router {
   private routes: { [key: string]: new () => Page } = {};
   constructor() {
     this.routes = {
+      '/': Main,
       '/recent': RecentMusic,
       '/genre': GenreMusic,
       '/notFound': NotFound,
@@ -18,6 +20,7 @@ export class Router {
   navigateTo(path: string): void {
     const Component = this.routes[path] || NotFound;
     const page = new Component();
+
     this.renderPage(page);
   }
 

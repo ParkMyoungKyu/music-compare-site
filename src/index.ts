@@ -7,6 +7,7 @@ Alpine.start();
 
 // 컴포넌트 import
 import { Router } from './router/Router';
+import { Main } from './main';
 import { Header } from './components/Header';
 import { MusicSiteList } from './components/MusicSiteList';
 import { Footer } from './components/Footer';
@@ -18,6 +19,7 @@ import { select } from './utils/ElementUtils';
 import { MusicSiteName } from './components/MusicSiteList';
 
 const appRoot = new Router();
+const goStart = new Main();
 const header = new Header();
 const musicSiteList = new MusicSiteList('ALL', MusicSiteName.flo); // 초기값 설정
 const footer = new Footer();
@@ -51,6 +53,7 @@ function renderHeaderAndFooter(): void {
 
 // 화면에 랜더링 이후 이벤트 랜더링 진행
 function initEventRender() {
+  goStart.getStart();
   header.headerMoveEvent();
   musicSiteList.musicSiteMoveEvent();
   // musicSiteList.categoryMoveEvent();

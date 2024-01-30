@@ -124,7 +124,7 @@ export class RecentMusic {
       selectAll<NodeListOf<HTMLButtonElement>>('.categoryBtn');
     categoryBtn.forEach((button: HTMLButtonElement) => {
       button.addEventListener('click', () => {
-        new MusicSiteList(button.value);
+        // new MusicSiteList(button.value);
       });
     });
   }
