@@ -1,5 +1,5 @@
 import Router from '../router/Router';
-import { selectAll } from '../utils/ElementUtils';
+import { select, selectAll } from '../utils/ElementUtils';
 
 export class Header {
   render(): string {
@@ -9,10 +9,10 @@ export class Header {
         x-data="{ isOpen: false }"
         class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
           <div class="flex lg:flex-1">
-            <a href="#" class="-m-1.5 p-1.5">
+            <button id="logo" class="-m-1.5 p-1.5">
               <span class="sr-only">Your Company</span>
               <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="">
-            </a>
+            </button>
           </div>
           <div class="flex lg:hidden">
             <button type="button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700">
@@ -38,8 +38,13 @@ export class Header {
 
   // header 이동
   headerMoveEvent() {
-    const headerBtn = selectAll<NodeListOf<HTMLButtonElement>>('.titleBtn');
     const headerMove = new Router();
+    const logo = select('#logo');
+    logo.addEventListener('click', () => {
+      headerMove.navigateTo('/');
+    });
+
+    const headerBtn = selectAll<NodeListOf<HTMLButtonElement>>('.titleBtn');
     headerBtn.forEach((button: HTMLButtonElement) => {
       button.addEventListener('click', () => {
         headerMove.navigateTo('/' + button.value);

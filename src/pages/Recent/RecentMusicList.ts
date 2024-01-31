@@ -5,11 +5,11 @@ import { select, selectAll } from '../../utils/ElementUtils';
 import { todayAlbumRes, todayAlbumResDataList } from '../../models/todayAlbum';
 
 export class RecentMusicList {
-  musicSite: MusicSiteName;
   chartGbn: string;
 
-  constructor(musicSite: MusicSiteName, chartGbn: string) {
-    this.musicSite = musicSite;
+  constructor(chartGbn: string, musicSite: MusicSiteName) {
+    console.log('RecentMusicList Init : ', musicSite);
+
     this.chartGbn = chartGbn;
 
     let callUrl: string = ''; // axios 호출 url
@@ -100,9 +100,11 @@ function setRecentAlbumList(data: todayAlbumRes) {
 }
 
 export class RecentMusic {
+  private musicSite = new MusicSiteList().musicSite;
   render(): string {
-    new MusicSiteList('ALL', MusicSiteName.flo); // 초기값 설정
+    new RecentMusicList('ALL', this.musicSite); // 초기값 설정
     const RecentMusicPopupComponent = new RecentMusicPopup();
+
     return `
     <div class="flex items-center justify-center py-1 md:py-1 flex-wrap">
       <button type="button" value="ALL"  class="categoryBtn py-2 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">ALL</button>
@@ -124,7 +126,7 @@ export class RecentMusic {
       selectAll<NodeListOf<HTMLButtonElement>>('.categoryBtn');
     categoryBtn.forEach((button: HTMLButtonElement) => {
       button.addEventListener('click', () => {
-        // new MusicSiteList(button.value);
+        new RecentMusicList(button.value, this.musicSite);
       });
     });
   }

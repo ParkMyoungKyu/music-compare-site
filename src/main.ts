@@ -42,9 +42,9 @@ export class Main {
   getStart() {
     const getStart = select('#getStart');
     const serviceStart = new Router();
-
+    // 초기 화면은 최신앨범으로...
     getStart.addEventListener('click', () => {
-      serviceStart.navigateTo('/index');
+      serviceStart.navigateTo('/recent');
     });
   }
 }
