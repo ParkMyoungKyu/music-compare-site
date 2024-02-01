@@ -13,6 +13,12 @@ import { select } from '../utils/ElementUtils';
 // 페이지 타입
 type Page = Main | RecentMusic | Top100Music | GenreMusic | NotFound;
 
+const commonComponent: object = {
+  header: Header,
+  musicSiteList: MusicSiteList,
+  footer: Footer,
+};
+
 export class Router {
   private routes: { [key: string]: new () => Page } = {};
 
@@ -28,6 +34,7 @@ export class Router {
   }
 
   navigateTo(path: string): void {
+    this.log('navigateTo ' + JSON.stringify(path));
     const Component = this.routes[path] || NotFound;
     const page = new Component();
 
@@ -36,9 +43,8 @@ export class Router {
 
   // 페이지 랜더링
   renderPage(page: Page, path: string): void {
-    console.log('Router Render', page, path);
+    this.log('renderPage ' + JSON.stringify(page) + ':' + JSON.stringify(path));
     const appDiv: HTMLDivElement = select('#body');
-
     appDiv.innerHTML = page.render();
 
     this.renderEventInit(path);
@@ -46,10 +52,9 @@ export class Router {
 
   // 이벤트 랜더링
   renderEventInit(path: string): void {
+    this.log('renderEventInit ' + path);
     if (path == '/' || path == '/index.html') {
-      select('#header').innerHTML = '';
-      select('#musicSiteList').innerHTML = '';
-      select('#footer').innerHTML = '';
+      this.renderRemoveCommon();
       new Main().getStart();
     } else {
       // 메인이 아닐경우 공통 컴포넌트 랜더링
@@ -59,7 +64,7 @@ export class Router {
 
   // Header,MusicSiteList,Footer 랜더링
   renderAddCommon(): void {
-    console.log('renderAddCommon');
+    this.log('renderAddCommon');
     const headerDiv: HTMLDivElement = select('#header');
     const musicSiteListDiv: HTMLDivElement = select('#musicSiteList');
     const footerDiv: HTMLDivElement = select('#footer');
@@ -79,15 +84,15 @@ export class Router {
 
   // Header,MusicSiteList,Footer 제거
   renderRemoveCommon(): void {
-    const headerDiv: HTMLDivElement = select('#header');
-    const musicSiteListDiv: HTMLDivElement = select('#musicSiteList');
-    const footerDiv: HTMLDivElement = select('#footer');
-
-    headerDiv.innerHTML = '';
-    musicSiteListDiv.innerHTML = '';
-    footerDiv.innerHTML = '';
+    this.log('renderRemoveCommon');
+    for (const component in commonComponent) {
+      select(`#${component}`).innerHTML = '';
+    }
   }
 
+  log(funcionName: string) {
+    console.log('[Router] ' + funcionName);
+  }
   // 공통 컴포넌트들의 이벤트 랜더링
   commonEventRender() {}
 }

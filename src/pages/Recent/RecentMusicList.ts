@@ -1,109 +1,125 @@
-import { MusicSelectedInfo, RecentMusicPopup } from './RecentMusicDetail';
+import { RecentMusicDetail } from './RecentMusicDetail';
 import { MusicSiteList, MusicSiteName } from '../../components/MusicSiteList';
 import { RecentAlbumAxios } from '../../utils/MusicAxios';
-import { select, selectAll } from '../../utils/ElementUtils';
+import { select, selectAll, tagCreat } from '../../utils/ElementUtils';
 import { todayAlbumRes, todayAlbumResDataList } from '../../models/todayAlbum';
 
-export class RecentMusicList {
-  chartGbn: string;
+export class RecentMusic {
+  musicSite: MusicSiteList = new MusicSiteList();
 
-  constructor(chartGbn: string, musicSite: MusicSiteName) {
-    console.log('RecentMusicList Init : ', musicSite);
-
-    this.chartGbn = chartGbn;
+  recentMusicInit(chartGbn: string) {
+    const thisMusicSite: MusicSiteName = this.musicSite.getMusicSite();
+    this.log('recentMusicInit ' + thisMusicSite);
 
     let callUrl: string = ''; // axios 호출 url
 
-    if (musicSite === MusicSiteName.melon) {
-      console.log('melon Start');
-    } else if (musicSite === MusicSiteName.genie) {
-      console.log('genie Start');
-    } else if (musicSite === MusicSiteName.flo) {
-      console.log('flo Start');
-    } else if (musicSite === MusicSiteName.vibe) {
-      console.log('vibe Start');
-    } else if (musicSite === MusicSiteName.bugs) {
-      console.log('bugs Start');
+    callUrl = this.FloecentUrl(chartGbn);
+    if (thisMusicSite === MusicSiteName.melon) {
+      this.log('melon Start');
+    } else if (thisMusicSite === MusicSiteName.genie) {
+      this.log('genie Start');
+    } else if (thisMusicSite === MusicSiteName.flo) {
+      this.log('flo Start');
+      callUrl = this.FloecentUrl(chartGbn);
+    } else if (thisMusicSite === MusicSiteName.vibe) {
+      this.log('vibe Start');
+      callUrl = this.VibeRecentUrl(chartGbn);
+    } else if (thisMusicSite === MusicSiteName.bugs) {
+      this.log('bugs Start');
     }
 
-    callUrl = chartGbnUrl(chartGbn);
-
-    setupData(callUrl);
+    this.setupData(callUrl);
   }
-}
 
-// 전체,국내,해외 차트에 따른 URL 값 셋팅
-function chartGbnUrl(gubun: string): string {
-  let url: string = '';
-  if (gubun == 'ALL') {
-    url = 'https://www.music-flo.com/api/meta/v1/album/ALL/new';
-  } else if (gubun === 'KPOP') {
-    url = 'https://www.music-flo.com/api/meta/v1/album/KPOP/new';
-  } else if (gubun === 'POP') {
-    url = 'https://www.music-flo.com/api/meta/v1/album/POP/new';
+  // 전체,국내,해외 차트에 따른 URL 값 셋팅
+  FloecentUrl(gubun: string): string {
+    let url: string = '';
+    if (gubun == 'ALL') {
+      url = 'https://www.music-flo.com/api/meta/v1/album/ALL/new';
+    } else if (gubun === 'KPOP') {
+      url = 'https://www.music-flo.com/api/meta/v1/album/KPOP/new';
+    } else if (gubun === 'POP') {
+      url = 'https://www.music-flo.com/api/meta/v1/album/POP/new';
+    }
+    return url;
   }
-  return url;
-}
 
-// 최근 발매 앨범 API 호출
-async function setupData(callUrl: string) {
-  const { data } = await RecentAlbumAxios(callUrl);
-  setRecentAlbumList(data);
-}
+  // 전체,국내,해외 차트에 따른 URL 값 셋팅
+  VibeRecentUrl(gubun: string): string {
+    let url: string = '';
+    if (gubun == 'ALL') {
+      url =
+        'https://apis.naver.com/vibeWeb/musicapiweb/chart/domain/MANUAL/newrelease/albumChart';
+    } else if (gubun === 'KPOP') {
+      url =
+        'https://apis.naver.com/vibeWeb/musicapiweb/chart/domain/DOMESTIC/newrelease/albumChart';
+    } else if (gubun === 'POP') {
+      url =
+        'https://apis.naver.com/vibeWeb/musicapiweb/chart/domain/OVERSEA/newrelease/albumChart';
+    }
 
-// 최근 발매 앨범 데이터 셋팅
-function setRecentAlbumList(data: todayAlbumRes) {
-  const AlbumList = data.data.list;
+    return url + '?start=1&display=50';
+  }
 
-  const todayAlbumList = select<HTMLDivElement>('.todayList');
-  todayAlbumList.innerHTML = ''; // 화면 초기화
+  // 최근 발매 앨범 API 호출
+  async setupData(callUrl: string) {
+    const { data } = await RecentAlbumAxios(callUrl);
+    this.setRecentAlbumList(data);
+  }
 
-  // 버튼 이벤트 생성
-  const musicSelectedInfo = new MusicSelectedInfo();
-  todayAlbumList.onclick = musicSelectedInfo.musicSelected;
+  // 최근 발매 앨범 데이터 셋팅
+  setRecentAlbumList(data: todayAlbumRes) {
+    this.log('setRecentAlbumList');
+    const AlbumList = data.data.list;
 
-  AlbumList.forEach((value: todayAlbumResDataList) => {
-    const aTag = document.createElement('div');
-    aTag.setAttribute('style', 'cursor:pointer');
-    aTag.setAttribute('class', 'group');
-    aTag.setAttribute('id', value.id.toString());
+    const todayAlbumList = select<HTMLDivElement>('.todayList');
+    todayAlbumList.innerHTML = ''; // 화면 초기화
 
-    const divTag = document.createElement('div');
-    divTag.setAttribute(
-      'class',
-      'aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7',
-    );
+    // 버튼 이벤트 생성
+    const recentMusicDetail = new RecentMusicDetail();
+    todayAlbumList.onclick = recentMusicDetail.musicSelected;
 
-    const imgTag = document.createElement('img');
-    imgTag.setAttribute(
-      'class',
-      'h-full w-full object-cover object-center group-hover:opacity-75 drop-shadow-xl',
-    );
-    imgTag.setAttribute('src', value.imgList[5].url);
-    imgTag.setAttribute('x-on:click', 'isPopup = true');
-    divTag.appendChild(imgTag);
+    AlbumList.forEach((value: todayAlbumResDataList) => {
+      const aTag = tagCreat('div');
+      aTag.setAttribute('style', 'cursor:pointer');
+      aTag.setAttribute('class', 'group');
+      aTag.setAttribute('id', value.id.toString());
 
-    const h3Tag = document.createElement('h3');
-    h3Tag.setAttribute('class', 'mt-4 text-sm text-gray-700');
-    h3Tag.textContent = value.title;
+      const divTag = tagCreat('div');
+      divTag.setAttribute(
+        'class',
+        'aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7',
+      );
 
-    const pTag = document.createElement('p');
-    pTag.setAttribute('class', 'mt-1 text-lg font-medium text-gray-900');
-    pTag.textContent = value.artistList[0].name;
+      const imgTag = tagCreat('img');
+      imgTag.setAttribute(
+        'class',
+        'h-full w-full object-cover object-center group-hover:opacity-75 drop-shadow-xl',
+      );
+      imgTag.setAttribute('src', value.imgList[5].url);
+      imgTag.setAttribute('x-on:click', 'isPopup = true');
+      divTag.appendChild(imgTag);
 
-    aTag.appendChild(divTag);
-    aTag.appendChild(h3Tag);
-    aTag.appendChild(pTag);
+      const h3Tag = tagCreat('h3');
+      h3Tag.setAttribute('class', 'mt-4 text-sm text-gray-700');
+      h3Tag.textContent = value.title;
 
-    todayAlbumList.appendChild(aTag);
-  });
-}
+      const pTag = tagCreat('p');
+      pTag.setAttribute('class', 'mt-1 text-lg font-medium text-gray-900');
+      pTag.textContent = value.artistList[0].name;
 
-export class RecentMusic {
-  private musicSite = new MusicSiteList().musicSite;
+      aTag.appendChild(divTag);
+      aTag.appendChild(h3Tag);
+      aTag.appendChild(pTag);
+
+      todayAlbumList.appendChild(aTag);
+    });
+  }
+
   render(): string {
-    new RecentMusicList('ALL', this.musicSite); // 초기값 설정
-    const RecentMusicPopupComponent = new RecentMusicPopup();
+    this.recentMusicInit('ALL'); // 초기값 설정
+    this.log('render ' + this.musicSite);
+    const RecentMusicDetailComponent = new RecentMusicDetail();
 
     return `
     <div class="flex items-center justify-center py-1 md:py-1 flex-wrap">
@@ -113,10 +129,12 @@ export class RecentMusic {
     </div>
     <div class="bg-white" x-data="{ isPopup: false }">
       <div class="mx-auto max-w-2xl px-4 py-8 sm:px-6 sm:py-8 lg:max-w-7xl lg:px-8">
-        <h2 class="sr-only">Products</h2>
-        <div class="todayList grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 xl:gap-x-8"></div>
+        <h2 class="sr-only">Recent Music</h2>
+        <div class="todayList grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 xl:gap-x-8">
+        
+        </div>
       </div>  
-      ${RecentMusicPopupComponent.render()}
+      ${RecentMusicDetailComponent.render()}
     </div>`;
   }
 
@@ -126,8 +144,13 @@ export class RecentMusic {
       selectAll<NodeListOf<HTMLButtonElement>>('.categoryBtn');
     categoryBtn.forEach((button: HTMLButtonElement) => {
       button.addEventListener('click', () => {
-        new RecentMusicList(button.value, this.musicSite);
+        this.log('categoryMoveEvent ');
+        this.recentMusicInit(button.value);
       });
     });
+  }
+
+  log(funcionName: string) {
+    console.log('[RecentMusic] ' + funcionName);
   }
 }
