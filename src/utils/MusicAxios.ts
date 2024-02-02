@@ -1,10 +1,11 @@
 import axios, { AxiosResponse } from 'axios';
-import { albumInfoRes, todayAlbumRes } from '../models/todayAlbum';
+import { albumInfoRes, recentAlbumRes } from '../models/RecentAlbum';
+import { top100AlbumRes } from '../models/Top100Album';
 
 // 최신 앨범 목록보기 API 호출
 export function RecentAlbumAxios(
   url: string,
-): Promise<AxiosResponse<todayAlbumRes>> {
+): Promise<AxiosResponse<recentAlbumRes>> {
   console.log('-------- RecentAlbumAxios --------');
   return axios.get(url);
 }
@@ -26,7 +27,7 @@ export function RecentNusicDetailAxios(
 
 export function Top100AlbumAxios(
   url: string,
-): Promise<AxiosResponse<todayAlbumRes>> {
+): Promise<AxiosResponse<top100AlbumRes>> {
   console.log('-------- RecentMusicAxios --------');
   return axios.get(url);
 }

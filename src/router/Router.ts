@@ -80,6 +80,12 @@ export class Router {
     // 공통 컴포넌트들의 이벤트 랜더링
     header.headerMoveEvent();
     musicSiteList.musicSiteMoveEvent();
+
+    const recentMusic = new RecentMusic();
+    recentMusic.categoryMoveEvent();
+
+    const top100Music = new Top100Music();
+    top100Music.moreTop100();
   }
 
   // Header,MusicSiteList,Footer 제거

@@ -1,14 +1,14 @@
-// START 오늘 발매 앨범 목록
-export interface todayAlbumRes {
+// START 최신 발매 앨범 목록
+export interface recentAlbumRes {
   code: string;
-  data: todayAlbumResData;
+  data: recentAlbumResData;
   traceId: string;
 }
 
-interface todayAlbumResData {
+interface recentAlbumResData {
   currentPage: number;
   lastPageYn: string;
-  list: todayAlbumResDataList[];
+  list: recentAlbumResDataList[];
   name: string;
   totalCount: number;
 }
@@ -23,7 +23,7 @@ interface artistInfo {
   name: string;
 }
 
-export interface todayAlbumResDataList {
+export interface recentAlbumResDataList {
   albumLabelList: object[];
   albumType: string;
   albumTypeStr: string;

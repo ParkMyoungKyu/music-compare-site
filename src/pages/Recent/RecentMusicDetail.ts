@@ -1,4 +1,4 @@
-import { albumInfoDetail, albumInfoRes } from '../../models/todayAlbum';
+import { albumInfoDetail, albumInfoRes } from '../../models/RecentAlbum';
 import { select, tagCreat } from '../../utils/ElementUtils';
 import { RecentNusicDetailAxios } from '../../utils/MusicAxios';
 

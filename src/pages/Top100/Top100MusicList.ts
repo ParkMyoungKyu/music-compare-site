@@ -3,18 +3,21 @@ import { select, tagCreat } from '../../utils/ElementUtils';
 import { Top100AlbumAxios } from '../../utils/MusicAxios';
 
 import { DateUtils, DateFormat } from '../../utils/DateUtils';
+import {
+  top100AlbumRes,
+  top100AlbumResDataList,
+} from '../../models/Top100Album';
 const dataUtil = new DateUtils();
 
 export class Top100Music {
   musicSite: MusicSiteList = new MusicSiteList();
-
+  musicView: number = 20; // 처음 보여줄 리스트 갯수
   top100MusictInit() {
     const thisMusicSite: MusicSiteName = this.musicSite.getMusicSite();
 
     let callUrl: string = ''; // axios 호출 url
 
-    callUrl =
-      'https://www.music-flo.com/api/display/v1/browser/chart/1/track/list?size=100';
+    callUrl = `https://www.music-flo.com/api/display/v1/browser/chart/1/track/list?size=${this.musicView}`;
     if (thisMusicSite === MusicSiteName.melon) {
       this.logText('melon Start');
     } else if (thisMusicSite === MusicSiteName.genie) {
@@ -37,15 +40,15 @@ export class Top100Music {
   }
 
   // Top100 앨범 데이터 셋팅
-  setTop100AlbumList(data: any) {
+  setTop100AlbumList(data: top100AlbumRes) {
     this.logText('setTop100AlbumList');
-    console.log(data);
-    const Top100List = data.data.trackList;
-    console.log(Top100List);
 
-    const UlTag = select('#Top100List');
-    Top100List.forEach((value: any) => {
-      console.log(value);
+    const Top100List = data.data.trackList;
+
+    const UlTag = select<HTMLUListElement>('#Top100List');
+    UlTag.innerText = '';
+
+    Top100List.forEach((value: top100AlbumResDataList) => {
       const liTag = tagCreat('li');
       liTag.setAttribute('class', 'flex justify-between gap-x-6 py-5');
 
@@ -127,34 +130,36 @@ export class Top100Music {
   }
 
   logText(funcionName: string) {
-    console.log('[Top100Music] ' + funcionName);
+    console.log('[Top100Music]', funcionName);
   }
 
   render() {
     this.top100MusictInit();
     this.logText('render');
     return `
-    <ul id="Top100List" role="list" class="divide-y divide-gray-100 mx-auto max-w-2xl px-4 py-8 sm:px-6 sm:py-8 lg:max-w-7xl lg:px-8">
-      <li class="flex justify-between gap-x-6 py-5">
-        <div class="flex min-w-0 gap-x-4">
-          <img class="h-12 w-12 flex-none rounded-lg bg-gray-50" src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
-          <div class="min-w-0 flex-auto">
-            <p class="text-sm font-semibold leading-6 text-gray-900">Dries Vincent</p>
-            <p class="mt-1 truncate text-xs leading-5 text-gray-500">dries.vincent@example.com</p>
-          </div>
-        </div>
-        <div class="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
-          <p class="text-sm leading-6 text-gray-900">Business Relations</p>
-          <div class="mt-1 flex items-center gap-x-1.5">
-            <div class="flex-none rounded-full bg-emerald-500/20 p-1">
-              <div class="h-1.5 w-1.5 rounded-full bg-emerald-500"></div>
-            </div>
-            <p class="mt-1 text-xs leading-5 text-gray-500">Last seen</p>
-            <!-- <p class="text-xs leading-5 text-gray-500">Online</p> -->
-          </div>
-        </div>
-      </li>
+    <div class="divide-y divide-gray-100 mx-auto max-w-2xl px-4 py-8 sm:px-6 sm:py-8 lg:max-w-7xl lg:px-8">
+    <ul id="Top100List" role="list" >
+      
     </ul>
+            
+    <button id="moreTop100" class="inline-block rounded bg-red-600 px-8 py-3 text-sm font-medium text-white transition hover:scale-110 hover:shadow-xl focus:outline-none focus:ring active:bg-red-600">
+      더보기
+    </button>
+    </div>
     `;
+  }
+
+  // 더보기
+  moreTop100() {
+    this.logText('moreTop100');
+    const moreBte = select('#moreTop100');
+    moreBte.addEventListener('click', () => {
+      if (this.musicView >= 100) {
+        console.log(this.musicView);
+      } else {
+        this.musicView += 20;
+        this.top100MusictInit();
+      }
+    });
   }
 }

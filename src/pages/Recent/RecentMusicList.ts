@@ -2,7 +2,10 @@ import { RecentMusicDetail } from './RecentMusicDetail';
 import { MusicSiteList, MusicSiteName } from '../../components/MusicSiteList';
 import { RecentAlbumAxios } from '../../utils/MusicAxios';
 import { select, selectAll, tagCreat } from '../../utils/ElementUtils';
-import { todayAlbumRes, todayAlbumResDataList } from '../../models/todayAlbum';
+import {
+  recentAlbumRes,
+  recentAlbumResDataList,
+} from '../../models/RecentAlbum';
 
 export class RecentMusic {
   musicSite: MusicSiteList = new MusicSiteList();
@@ -68,18 +71,18 @@ export class RecentMusic {
   }
 
   // 최근 발매 앨범 데이터 셋팅
-  setRecentAlbumList(data: todayAlbumRes) {
+  setRecentAlbumList(data: recentAlbumRes) {
     this.log('setRecentAlbumList');
     const AlbumList = data.data.list;
 
-    const todayAlbumList = select<HTMLDivElement>('.todayList');
-    todayAlbumList.innerHTML = ''; // 화면 초기화
+    const recentAlbumList = select<HTMLDivElement>('.recentList');
+    recentAlbumList.innerHTML = ''; // 화면 초기화
 
     // 버튼 이벤트 생성
     const recentMusicDetail = new RecentMusicDetail();
-    todayAlbumList.onclick = recentMusicDetail.musicSelected;
+    recentAlbumList.onclick = recentMusicDetail.musicSelected;
 
-    AlbumList.forEach((value: todayAlbumResDataList) => {
+    AlbumList.forEach((value: recentAlbumResDataList) => {
       const aTag = tagCreat('div');
       aTag.setAttribute('style', 'cursor:pointer');
       aTag.setAttribute('class', 'group');
@@ -112,7 +115,7 @@ export class RecentMusic {
       aTag.appendChild(h3Tag);
       aTag.appendChild(pTag);
 
-      todayAlbumList.appendChild(aTag);
+      recentAlbumList.appendChild(aTag);
     });
   }
 
@@ -130,7 +133,7 @@ export class RecentMusic {
     <div class="bg-white" x-data="{ isPopup: false }">
       <div class="mx-auto max-w-2xl px-4 py-8 sm:px-6 sm:py-8 lg:max-w-7xl lg:px-8">
         <h2 class="sr-only">Recent Music</h2>
-        <div class="todayList grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 xl:gap-x-8">
+        <div class="recentList grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 xl:gap-x-8">
         
         </div>
       </div>  
