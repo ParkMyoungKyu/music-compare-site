@@ -2,17 +2,15 @@ import { MusicSiteList, MusicSiteName } from '../../components/MusicSiteList';
 import { select, tagCreat } from '../../utils/ElementUtils';
 import { Top100AlbumAxios } from '../../utils/MusicAxios';
 
-import { DateUtils, DateFormat } from '../../utils/DateUtils';
 import {
   top100AlbumRes,
   top100AlbumResDataList,
 } from '../../models/Top100Album';
-const dataUtil = new DateUtils();
 
 export class Top100Music {
   musicSite: MusicSiteList = new MusicSiteList();
   musicView: number = 20; // 처음 보여줄 리스트 갯수
-  top100MusictInit() {
+  top100MusicInit() {
     const thisMusicSite: MusicSiteName = this.musicSite.getMusicSite();
 
     let callUrl: string = ''; // axios 호출 url
@@ -45,87 +43,57 @@ export class Top100Music {
 
     const Top100List = data.data.trackList;
 
-    const UlTag = select<HTMLUListElement>('#Top100List');
-    UlTag.innerText = '';
+    const ulTag = select<HTMLUListElement>('#Top100List');
+    ulTag.innerText = '';
 
-    Top100List.forEach((value: top100AlbumResDataList) => {
+    Top100List.forEach((value: top100AlbumResDataList, index: number) => {
       const liTag = tagCreat('li');
-      liTag.setAttribute('class', 'flex justify-between gap-x-6 py-5');
-
-      const divTag01 = tagCreat('div');
-      divTag01.setAttribute('class', 'flex min-w-0 gap-x-4');
-
-      const imgTag01 = tagCreat('img');
-      imgTag01.setAttribute(
+      liTag.setAttribute(
         'class',
-        'h-12 w-12 flex-none rounded-lg bg-gray-50',
+        'flex flex-col p-4 mb-1 bg-gray-800 border-gray-800 shadow-md hover:shodow-lg rounded-2xl cursor-pointer transition ease-in duration-500  transform hover:scale-105',
       );
-      imgTag01.setAttribute('src', value.album.imgList[5].url);
-
-      const divTag01_01 = tagCreat('div');
-      divTag01_01.setAttribute('class', 'min-w-0 flex-auto');
-
-      const pTag01 = tagCreat('p');
-      pTag01.setAttribute(
-        'class',
-        'text-sm font-semibold leading-6 text-gray-900',
-      );
-      pTag01.innerText = value.name;
-
-      const pTag02 = tagCreat('p');
-      pTag02.setAttribute(
-        'class',
-        'mt-1 truncate text-xs leading-5 text-gray-500',
-      );
-      pTag02.innerText = value.album.title;
-
-      const divTag02 = tagCreat('div');
-      divTag02.setAttribute(
-        'class',
-        'hidden shrink-0 sm:flex sm:flex-col sm:items-end',
-      );
-
-      const pTag02_01 = tagCreat('p');
-      pTag02_01.setAttribute('class', 'text-sm leading-6 text-gray-900');
-      pTag02_01.innerText = value.artistList[0].name;
-
-      const divTag02_01 = tagCreat('div');
-      divTag02_01.setAttribute('class', 'mt-1 flex items-center gap-x-1.5');
-
-      const divTag02_01_01 = tagCreat('div');
-      divTag02_01_01.setAttribute(
-        'class',
-        'flex-none rounded-full bg-emerald-500/20 p-1',
-      );
-
-      const divTag02_01_01_01 = tagCreat('div');
-      divTag02_01_01_01.setAttribute(
-        'class',
-        'h-1.5 w-1.5 rounded-full bg-emerald-500',
-      );
-
-      const pTag02_02 = tagCreat('p');
-      pTag02_02.setAttribute('class', 'mt-1 text-xs leading-5 text-gray-500');
-      pTag02_02.innerText = dataUtil.dateformat(
-        value.album.releaseYmd,
-        DateFormat.yyyymmdd,
-      );
-
-      divTag01_01.appendChild(pTag01);
-      divTag01_01.appendChild(pTag02);
-      divTag01.appendChild(imgTag01);
-      divTag01.appendChild(divTag01_01);
-
-      divTag02_01_01.appendChild(divTag02_01_01_01);
-      divTag02_01.appendChild(divTag02_01_01);
-      divTag02_01.appendChild(pTag02_02);
-      divTag02.appendChild(pTag02_01);
-      divTag02.appendChild(divTag02_01);
-
-      liTag.appendChild(divTag01);
-      liTag.appendChild(divTag02);
-
-      UlTag.appendChild(liTag);
+      liTag.innerHTML = `
+            <div class="flex items-center justify-between">
+              <div class="flex flex-col ml-3 min-w-0">
+                <div class="flex">
+                  <h5 class="flex items-center font-medium text-gray-300 mr-6">
+                  ${index + 1}
+                  </h5>
+                </div>
+              </div>
+              <div class="flex items-center mr-auto">
+                <div class="inline-flex w-12 h-12">
+                  <img src="${value.album.imgList[5].url}" alt="aji" class=" relative p-1 w-12 h-12 object-cover rounded-2xl"><span class="absolute w-12 h-12 inline-flex border-2 rounded-2xl border-gray-600 opacity-75">
+                  <span></span>
+                </div>
+          
+                <div class="flex flex-col ml-3 min-w-0">
+                  <div class="font-medium leading-none text-gray-100">${value.name}</div>
+                  <p class="text-sm text-gray-500 leading-none mt-1 truncate">${value.album.title}</p>
+                </div>
+              </div>
+              <div class="flex flex-col ml-3 min-w-0">
+                <div class="flex">
+                  <h5 class="flex items-center font-medium text-gray-300 mr-2">
+                     ${value.artistList[0].name}
+                  </h5>
+                  <div class="flex">
+                    <a class="flex-no-shrink text-xs  font-medium tracking-wider  text-green-400 hover:text-green-700 transition ease-in duration-300 mr-2">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor">
+                        <path fill-rule="evenodd" d="M20.492,7.969,10.954.975A5,5,0,0,0,3,5.005V19a4.994,4.994,0,0,0,7.954,4.03l9.538-6.994a5,5,0,0,0,0-8.062Z"/>
+                      </svg>
+                    </a>
+                    <a class="flex-no-shrink text-xs  font-medium tracking-wider  text-gray-400 hover:text-green-400 transition ease-in duration-300 mr-2">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L4.586 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.586l3.707-3.707a1 1 0 011.09-.217zM12.293 7.293a1 1 0 011.414 0L15 8.586l1.293-1.293a1 1 0 111.414 1.414L16.414 10l1.293 1.293a1 1 0 01-1.414 1.414L15 11.414l-1.293 1.293a1 1 0 01-1.414-1.414L13.586 10l-1.293-1.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `;
+      ulTag.appendChild(liTag);
     });
   }
 
@@ -134,17 +102,19 @@ export class Top100Music {
   }
 
   render() {
-    this.top100MusictInit();
+    this.top100MusicInit();
     this.logText('render');
     return `
     <div class="divide-y divide-gray-100 mx-auto max-w-2xl px-4 py-8 sm:px-6 sm:py-8 lg:max-w-7xl lg:px-8">
-    <ul id="Top100List" role="list" >
-      
-    </ul>
-            
-    <button id="moreTop100" class="inline-block rounded bg-red-600 px-8 py-3 text-sm font-medium text-white transition hover:scale-110 hover:shadow-xl focus:outline-none focus:ring active:bg-red-600">
-      더보기
-    </button>
+      <ul id="Top100List" role="list" >
+        
+      </ul>
+    </div>
+   
+    <div class="my-8 flex flex-wrap justify-center gap-4">
+      <button id="moreTop100" class="inline-block w-64 rounded bg-red-600 px-8 py-3 text-sm font-medium text-white transition hover:scale-105 hover:shadow-xl focus:outline-none focus:ring active:bg-red-600">
+        더보기
+      </button>
     </div>
     `;
   }
@@ -158,7 +128,7 @@ export class Top100Music {
         console.log(this.musicView);
       } else {
         this.musicView += 20;
-        this.top100MusictInit();
+        this.top100MusicInit();
       }
     });
   }
