@@ -1,21 +1,23 @@
 import { MusicSiteList, MusicSiteName } from '../../components/MusicSiteList';
-import { select, tagCreat } from '../../utils/ElementUtils';
-import { Top100AlbumAxios } from '../../utils/MusicAxios';
+import { select, selectAll, tagCreat } from '../../utils/ElementUtils';
+import { Top100AlbumAxios, Top100CategoryAxios } from '../../utils/MusicAxios';
 
 import {
-  top100AlbumRes,
+  top100AlbumResData,
   top100AlbumResDataList,
+  top100Category,
 } from '../../models/Top100Album';
 
 export class Top100Music {
   musicSite: MusicSiteList = new MusicSiteList();
+  musicCategory: number = 1; // 카테고리 id
   musicView: number = 20; // 처음 보여줄 리스트 갯수
   top100MusicInit() {
     const thisMusicSite: MusicSiteName = this.musicSite.getMusicSite();
 
     let callUrl: string = ''; // axios 호출 url
 
-    callUrl = `https://www.music-flo.com/api/display/v1/browser/chart/1/track/list?size=${this.musicView}`;
+    callUrl = `https://www.music-flo.com/api/display/v1/browser/chart/${this.musicCategory}/track/list?size=${this.musicView}`;
     if (thisMusicSite === MusicSiteName.melon) {
       this.logText('melon Start');
     } else if (thisMusicSite === MusicSiteName.genie) {
@@ -33,12 +35,17 @@ export class Top100Music {
 
   // Top100 앨범 API 호출
   async setupData(callUrl: string) {
-    const { data } = await Top100AlbumAxios(callUrl);
-    this.setTop100AlbumList(data);
+    const { data: albumList } = await Top100AlbumAxios(callUrl);
+    const { data: category } = await Top100CategoryAxios(
+      'https://www.music-flo.com/api/display/v1/browser/chart/menu/list',
+    );
+
+    this.setTop100AlbumList(albumList);
+    this.setTop100Category(category);
   }
 
   // Top100 앨범 데이터 셋팅
-  setTop100AlbumList(data: top100AlbumRes) {
+  setTop100AlbumList(data: top100AlbumResData) {
     this.logText('setTop100AlbumList');
 
     const Top100List = data.data.trackList;
@@ -97,14 +104,41 @@ export class Top100Music {
     });
   }
 
+  // Top100 카테고리 데이터 셋팅
+  setTop100Category(data: top100Category) {
+    console.log(data);
+    const categoryList = data.data.list;
+
+    const divTag = select<HTMLDivElement>('#top100Category');
+    divTag.innerText = '';
+
+    categoryList.forEach(value => {
+      console.log(value);
+      const buttonTag = tagCreat('button');
+      buttonTag.setAttribute(
+        'class',
+        'categoryBtn text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700',
+      );
+      buttonTag.setAttribute('type', 'button');
+      buttonTag.setAttribute('value', `${value.id}`);
+      buttonTag.innerText = value.name;
+
+      divTag.appendChild(buttonTag);
+    });
+  }
+
   logText(funcionName: string) {
-    console.log('[Top100Music]', funcionName);
+    console.log('[Top100Music] ', funcionName);
   }
 
   render() {
     this.top100MusicInit();
     this.logText('render');
     return `
+    <div id="top100Category" class="mx-auto max-w-2xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
+      
+    </div>
+
     <div class="divide-y divide-gray-100 mx-auto max-w-2xl px-4 py-8 sm:px-6 sm:py-8 lg:max-w-7xl lg:px-8">
       <ul id="Top100List" role="list" >
         
@@ -130,6 +164,19 @@ export class Top100Music {
         this.musicView += 20;
         this.top100MusicInit();
       }
+    });
+  }
+
+  // 카테고리 변경
+  changeCategory() {
+    const categoryBtn =
+      selectAll<NodeListOf<HTMLButtonElement>>('.categoryBtn');
+    categoryBtn.forEach((button: HTMLButtonElement) => {
+      button.addEventListener('click', () => {
+        this.logText('changeCategory');
+        this.logText(button.value);
+        this.top100MusicInit();
+      });
     });
   }
 }

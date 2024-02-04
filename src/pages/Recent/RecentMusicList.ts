@@ -3,7 +3,7 @@ import { MusicSiteList, MusicSiteName } from '../../components/MusicSiteList';
 import { RecentAlbumAxios } from '../../utils/MusicAxios';
 import { select, selectAll, tagCreat } from '../../utils/ElementUtils';
 import {
-  recentAlbumRes,
+  recentAlbumResData,
   recentAlbumResDataList,
 } from '../../models/RecentAlbum';
 
@@ -71,7 +71,7 @@ export class RecentMusic {
   }
 
   // 최근 발매 앨범 데이터 셋팅
-  setRecentAlbumList(data: recentAlbumRes) {
+  setRecentAlbumList(data: recentAlbumResData) {
     this.log('setRecentAlbumList');
     const AlbumList = data.data.list;
 
@@ -126,9 +126,9 @@ export class RecentMusic {
 
     return `
     <div class="flex items-center justify-center py-1 md:py-1 flex-wrap">
-      <button type="button" value="ALL"  class="categoryBtn py-2 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">ALL</button>
-      <button type="button" value="KPOP" class="categoryBtn py-2 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">K-POP</button>
-      <button type="button" value="POP"  class="categoryBtn py-2 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">POP</button>
+      <button type="button" value="ALL"  class="categoryBtn text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">ALL</button>
+      <button type="button" value="KPOP" class="categoryBtn text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">K-POP</button>
+      <button type="button" value="POP"  class="categoryBtn text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">POP</button>
     </div>
     <div class="bg-white" x-data="{ isPopup: false }">
       <div class="mx-auto max-w-2xl px-4 py-8 sm:px-6 sm:py-8 lg:max-w-7xl lg:px-8">

@@ -1,38 +1,30 @@
+import { AxiosResCommon } from './AxiosResCommon';
+
 // START 최신 발매 앨범 목록
-export interface recentAlbumRes {
-  code: string;
-  data: recentAlbumResData;
-  traceId: string;
-}
-
-interface recentAlbumResData {
-  currentPage: number;
-  lastPageYn: string;
-  list: recentAlbumResDataList[];
-  name: string;
-  totalCount: number;
-}
-
-interface imgList {
-  size: number;
-  url: string;
-}
-
-interface artistInfo {
-  id: number;
-  name: string;
+export interface recentAlbumResData extends AxiosResCommon {
+  data: {
+    currentPage: number;
+    lastPageYn: string;
+    list: recentAlbumResDataList[];
+    name: string;
+    totalCount: number;
+  };
 }
 
 export interface recentAlbumResDataList {
   albumLabelList: object[];
   albumType: string;
   albumTypeStr: string;
-  artistList: Array<artistInfo>;
+  artistList: [{ id: number; name: string }];
   availableSizeList: Array<number>;
   categoryType: string;
   genreStyle: string;
   id: number;
-  imgList: Array<imgList>;
+  imgList: Array<{
+    size: number;
+    url: string;
+  }>;
+
   imgUrlFormat: string;
   releaseYmd: string;
   representationArtist: object;
@@ -51,28 +43,23 @@ export interface albumInfoResList {
   list: Array<albumInfoDetail>;
 }
 
-interface albumDetail {
-  albumLabelList: albumLabelList[];
-  albumType: string;
-  albumTypeStr: string;
-  genreStyle: string;
-  id: number;
-  imgList: Array<imgList>;
-  releaseYmd: string;
-  title: string;
-}
-
-interface albumLabelList {
-  dispSn: number;
-  labelId: number;
-  labelNm: string;
-}
-
 export interface albumInfoDetail {
   adultAuthYn: string;
   agencyId: number;
-  album: albumDetail;
-  artistList: Array<artistInfo>;
+  album: {
+    albumLabelList: [{ dispSn: number; labelId: number; labelNm: string }];
+    albumType: string;
+    albumTypeStr: string;
+    genreStyle: string;
+    id: number;
+    imgList: Array<{
+      size: number;
+      url: string;
+    }>;
+    releaseYmd: string;
+    title: string;
+  };
+  artistList: [{ id: number; name: string }];
   audioContentYn: string;
   createDateTime: string;
   diskId: string;

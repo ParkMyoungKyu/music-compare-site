@@ -1,22 +1,27 @@
-export interface top100AlbumRes {
-  code: string;
-  data: top100AlbumResData;
-  traceId: string;
+import { AxiosResCommon } from './AxiosResCommon';
+// START TOP100 카테고리 리스트 가져오기
+export interface top100Category extends AxiosResCommon {
+  data: {
+    list: Array<{ id: number; name: string }>;
+  };
 }
+// END TOP100 카테고리 리스트 가져오기
 
-interface top100AlbumResData {
-  basedOnUpdate: string;
-  createDateTime: number;
-  description: string;
-  id: number;
-  imgList: object;
-  likeYn: string;
-  name: string;
-  tasteMix: string;
-  totalCount: number;
-  trackList: top100AlbumResDataList[];
-  type: string;
-  updateDateTime: number;
+export interface top100AlbumResData extends AxiosResCommon {
+  data: {
+    basedOnUpdate: string;
+    createDateTime: number;
+    description: string;
+    id: number;
+    imgList: object;
+    likeYn: string;
+    name: string;
+    tasteMix: string;
+    totalCount: number;
+    trackList: top100AlbumResDataList[];
+    type: string;
+    updateDateTime: number;
+  };
 }
 
 export interface top100AlbumResDataList {

@@ -86,6 +86,7 @@ export class Router {
 
     const top100Music = new Top100Music();
     top100Music.moreTop100();
+    top100Music.changeCategory();
   }
 
   // Header,MusicSiteList,Footer 제거
