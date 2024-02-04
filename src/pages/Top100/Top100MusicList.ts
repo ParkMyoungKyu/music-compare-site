@@ -122,8 +122,8 @@ export class Top100Music {
   // 더보기
   moreTop100() {
     this.logText('moreTop100');
-    const moreBte = select('#moreTop100');
-    moreBte.addEventListener('click', () => {
+    const moreBtn = select('#moreTop100');
+    moreBtn.addEventListener('click', () => {
       if (this.musicView >= 100) {
         console.log(this.musicView);
       } else {

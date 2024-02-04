@@ -1,4 +1,4 @@
-export interface top100AlbumRes extends top100AlbumResData {
+export interface top100AlbumRes {
   code: string;
   data: top100AlbumResData;
   traceId: string;
