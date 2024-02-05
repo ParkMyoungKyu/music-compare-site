@@ -39,7 +39,7 @@ export function Top100CategoryAxios(
 export function Top100AlbumAxios(
   url: string,
 ): Promise<AxiosResponse<top100AlbumResData>> {
-  console.log('-------- RecentMusicAxios --------');
+  console.log('-------- Top100AlbumAxios --------');
   return axios.get(url);
 }
 

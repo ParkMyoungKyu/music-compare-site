@@ -1,5 +1,5 @@
 import { MusicSiteList, MusicSiteName } from '../../components/MusicSiteList';
-import { select, selectAll, tagCreat } from '../../utils/ElementUtils';
+import { select, tagCreat } from '../../utils/ElementUtils';
 import { Top100AlbumAxios, Top100CategoryAxios } from '../../utils/MusicAxios';
 
 import {
@@ -12,12 +12,16 @@ export class Top100Music {
   musicSite: MusicSiteList = new MusicSiteList();
   musicCategory: number = 1; // 카테고리 id
   musicView: number = 20; // 처음 보여줄 리스트 갯수
-  top100MusicInit() {
+
+  top100MusicInit(): void {
+    this.logText('top100MusicInit');
+    console.log(this.musicCategory);
     const thisMusicSite: MusicSiteName = this.musicSite.getMusicSite();
+    const thisCategory: number = this.musicCategory;
 
     let callUrl: string = ''; // axios 호출 url
 
-    callUrl = `https://www.music-flo.com/api/display/v1/browser/chart/${this.musicCategory}/track/list?size=${this.musicView}`;
+    callUrl = `https://www.music-flo.com/api/display/v1/browser/chart/${thisCategory}/track/list?size=${this.musicView}`;
     if (thisMusicSite === MusicSiteName.melon) {
       this.logText('melon Start');
     } else if (thisMusicSite === MusicSiteName.genie) {
@@ -106,14 +110,13 @@ export class Top100Music {
 
   // Top100 카테고리 데이터 셋팅
   setTop100Category(data: top100Category) {
-    console.log(data);
+    this.logText('setTop100Category');
     const categoryList = data.data.list;
 
     const divTag = select<HTMLDivElement>('#top100Category');
     divTag.innerText = '';
 
     categoryList.forEach(value => {
-      console.log(value);
       const buttonTag = tagCreat('button');
       buttonTag.setAttribute(
         'class',
@@ -121,6 +124,11 @@ export class Top100Music {
       );
       buttonTag.setAttribute('type', 'button');
       buttonTag.setAttribute('value', `${value.id}`);
+      buttonTag.addEventListener('click', () => {
+        this.musicCategory = value.id;
+        this.changeCategory(value.id);
+      });
+
       buttonTag.innerText = value.name;
 
       divTag.appendChild(buttonTag);
@@ -135,20 +143,28 @@ export class Top100Music {
     this.top100MusicInit();
     this.logText('render');
     return `
-    <div id="top100Category" class="mx-auto max-w-2xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
-      
-    </div>
-
-    <div class="divide-y divide-gray-100 mx-auto max-w-2xl px-4 py-8 sm:px-6 sm:py-8 lg:max-w-7xl lg:px-8">
-      <ul id="Top100List" role="list" >
+    <div x-data = "{isAlert : false}">
+      <div id="top100Category" class="mx-auto max-w-2xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
         
-      </ul>
-    </div>
-   
-    <div class="my-8 flex flex-wrap justify-center gap-4">
-      <button id="moreTop100" class="inline-block w-64 rounded bg-red-600 px-8 py-3 text-sm font-medium text-white transition hover:scale-105 hover:shadow-xl focus:outline-none focus:ring active:bg-red-600">
-        더보기
-      </button>
+      </div>
+
+      <div class="divide-y divide-gray-100 mx-auto max-w-2xl px-4 py-8 sm:px-6 sm:py-8 lg:max-w-7xl lg:px-8">
+        <ul id="Top100List" role="list" >
+          
+        </ul>
+      </div>
+
+      <div x-show="isAlert"    
+        class="moreOverAlert my-8 flex flex-wrap justify-center gap-4 bg-blue-100 border-t border-b border-blue-500 text-blue-700 px-4 py-3" role="alert">
+        <p class="font-bold">[최대 차트 조회]</p>
+        <p class="text-sm">조회할 수 있는 차트의 최대 순위는 100위입니다.</p>
+      </div>
+
+      <div class="my-8 flex flex-wrap justify-center gap-4">
+        <button id="moreTop100" class="inline-block w-64 rounded bg-red-600 px-8 py-3 text-sm font-medium text-white transition hover:scale-105 hover:shadow-xl focus:outline-none focus:ring active:bg-red-600">
+          더보기
+        </button>
+      </div>
     </div>
     `;
   }
@@ -157,9 +173,10 @@ export class Top100Music {
   moreTop100() {
     this.logText('moreTop100');
     const moreBtn = select('#moreTop100');
+
     moreBtn.addEventListener('click', () => {
-      if (this.musicView >= 100) {
-        console.log(this.musicView);
+      if (this.musicView === 100) {
+        select('.moreOverAlert').setAttribute('x-show', 'true');
       } else {
         this.musicView += 20;
         this.top100MusicInit();
@@ -168,15 +185,12 @@ export class Top100Music {
   }
 
   // 카테고리 변경
-  changeCategory() {
-    const categoryBtn =
-      selectAll<NodeListOf<HTMLButtonElement>>('.categoryBtn');
-    categoryBtn.forEach((button: HTMLButtonElement) => {
-      button.addEventListener('click', () => {
-        this.logText('changeCategory');
-        this.logText(button.value);
-        this.top100MusicInit();
-      });
-    });
+  changeCategory(id: number) {
+    select('.moreOverAlert').setAttribute('x-show', 'false');
+
+    this.musicCategory = id;
+    this.musicView = 20;
+
+    this.top100MusicInit();
   }
 }
