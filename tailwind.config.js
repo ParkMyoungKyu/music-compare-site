@@ -2,7 +2,11 @@
 export default {
   content: ['./src/**/*.{js,jsx,ts,tsx}', './index.html'],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        nanumgothic: ['nanumgothic'],
+      },
+    },
   },
   plugins: [
     // require('@tailwindcss/aspect-ratio'),
