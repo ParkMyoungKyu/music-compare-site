@@ -31,6 +31,9 @@ export class MusicSiteList {
 
   getMusicSite(): MusicSiteName {
     this.log('getMusicSite ' + MusicSiteList.musicSite);
+    if (!MusicSiteList.musicSite) {
+      MusicSiteList.musicSite = 'flo' as MusicSiteName;
+    }
     return MusicSiteList.musicSite;
   }
 
