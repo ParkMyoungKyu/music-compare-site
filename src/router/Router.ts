@@ -34,7 +34,7 @@ export class Router {
   }
 
   navigateTo(path: string): void {
-    this.log('navigateTo ' + JSON.stringify(path));
+    this.logText('navigateTo ' + JSON.stringify(path));
     const Component = this.routes[path] || NotFound;
     const page = new Component();
 
@@ -43,7 +43,9 @@ export class Router {
 
   // 페이지 랜더링
   renderPage(page: Page, path: string): void {
-    this.log('renderPage ' + JSON.stringify(page) + ':' + JSON.stringify(path));
+    this.logText(
+      'renderPage ' + JSON.stringify(page) + ':' + JSON.stringify(path),
+    );
     const appDiv: HTMLDivElement = select('#body');
     appDiv.innerHTML = page.render();
 
@@ -52,19 +54,20 @@ export class Router {
 
   // 이벤트 랜더링
   renderEventInit(path: string): void {
-    this.log('renderEventInit ' + path);
+    this.logText('renderEventInit ' + path);
     if (path == '/' || path == '/index.html') {
       this.renderRemoveCommon();
       new Main().getStart();
     } else {
       // 메인이 아닐경우 공통 컴포넌트 랜더링
       this.renderAddCommon();
+      this.componentEventRender(path);
     }
   }
 
   // Header,MusicSiteList,Footer 랜더링
   renderAddCommon(): void {
-    this.log('renderAddCommon');
+    this.logText('renderAddCommon');
     const headerDiv: HTMLDivElement = select('#header');
     const musicSiteListDiv: HTMLDivElement = select('#musicSiteList');
     const footerDiv: HTMLDivElement = select('#footer');
@@ -80,28 +83,32 @@ export class Router {
     // 공통 컴포넌트들의 이벤트 랜더링
     header.headerMoveEvent();
     musicSiteList.musicSiteMoveEvent();
-
-    const recentMusic = new RecentMusic();
-    recentMusic.categoryMoveEvent();
-
-    const top100Music = new Top100Music();
-    top100Music.moreTop100();
-    top100Music.changeCategory();
   }
 
   // Header,MusicSiteList,Footer 제거
   renderRemoveCommon(): void {
-    this.log('renderRemoveCommon');
+    this.logText('renderRemoveCommon');
     for (const component in commonComponent) {
       select(`#${component}`).innerHTML = '';
     }
   }
 
-  log(funcionName: string) {
+  // 개별 컴포넌트들의 이벤트 랜더링
+  componentEventRender(path: string) {
+    if (path == '/recent') {
+      const recentMusic = new RecentMusic();
+      recentMusic.categoryMoveEvent();
+    } else if (path == '/top100') {
+      const top100Music = new Top100Music();
+      top100Music.moreTop100();
+    } else if (path == '/genre') {
+      console.log(path);
+    }
+  }
+
+  logText(funcionName: string) {
     console.log('[Router] ' + funcionName);
   }
-  // 공통 컴포넌트들의 이벤트 랜더링
-  commonEventRender() {}
 }
 
 export default Router;
