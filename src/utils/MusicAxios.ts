@@ -48,3 +48,11 @@ export function GenreListAxios(url: string): Promise<AxiosResponse<genreList>> {
   console.log('-------- GenreCategoryAxios --------');
   return axios.get(url);
 }
+
+// 선택 장르 리스트 가져오기
+export function GenreAlbumListAxios(
+  url: string,
+): Promise<AxiosResponse<genreList>> {
+  console.log('-------- GenreAlbumListAxios --------');
+  return axios.get(url);
+}
