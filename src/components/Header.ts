@@ -16,6 +16,8 @@ Alpine.data('changeMenu', () => ({
 }));
 
 export class Header {
+  private static headerName: string = '오늘 발매 음악';
+
   render(): string {
     return `
       <header class="inset-x-0 top-0 z-50" x-data="changeMenu">
@@ -89,6 +91,14 @@ export class Header {
   `;
   }
 
+  setHeader(header: string): void {
+    Header.headerName = header;
+  }
+
+  getHeader() {
+    return Header.headerName;
+  }
+
   // header 이동
   headerMoveEvent() {
     const headerMove = new Router();
@@ -100,6 +110,7 @@ export class Header {
     const headerBtn = selectAll<NodeListOf<HTMLButtonElement>>('.titleBtn');
     headerBtn.forEach((button: HTMLButtonElement) => {
       button.addEventListener('click', () => {
+        this.setHeader(button.innerText);
         console.log('Header Go > ', button.value);
         headerMove.navigateTo('/' + button.value);
       });
