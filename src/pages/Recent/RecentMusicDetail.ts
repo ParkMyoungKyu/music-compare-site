@@ -20,6 +20,11 @@ export class RecentMusicDetail {
       if (event.target.parentElement) {
         musicSelectId = event.target.parentElement?.id as string;
       }
+    } else if (event.target instanceof HTMLElement) {
+      console.log('H3 Tag Selected');
+      if (event.target.parentElement) {
+        musicSelectId = event.target.parentElement?.id as string;
+      }
     }
 
     callUrl = albumInfoUrl(musicSelectId);
@@ -29,7 +34,7 @@ export class RecentMusicDetail {
 
   render(): string {
     return `
-      <div x-show="isPopup" id="albumPopup" class="relative z-10" role="dialog" aria-modal="true">
+      <div x-show="isOpen" id="albumPopup" class="relative z-10" role="dialog" aria-modal="true">
         <!--
         Background backdrop, show/hide based on modal state.
     
@@ -40,7 +45,8 @@ export class RecentMusicDetail {
             From: "opacity-100"
             To:   "opacity-0"
         -->
-        <div x-show="isPopup"
+        <div 
+        x-show="isOpen"
              x-transition:enter="ease-out duration-300"
              x-transition:enter-start="opacity-0"
              x-transition:enter-end="opacity-100"       
@@ -62,7 +68,7 @@ export class RecentMusicDetail {
                 To:       "opacity-0 translate-y-4 md:translate-y-0 md:scale-95"
             -->
             <div 
-            x-show="isPopup"
+            x-show="isOpen"
             x-transition:enter="ease-out duration-300"
             x-transition:enter-start="opacity-0 translate-y-4 md:translate-y-0 md:scale-95"
             x-transition:enter-end="opacity-100 translate-y-0 md:scale-100"       
@@ -72,7 +78,7 @@ export class RecentMusicDetail {
         
             class="flex w-full transform text-left text-base transition md:my-8 md:max-w-2xl md:px-4 lg:max-w-4xl">
             <div class="relative flex w-full items-center overflow-hidden bg-white px-4 pb-8 pt-14 shadow-2xl sm:px-6 sm:pt-8 md:p-6 lg:p-8">
-              <button @click="isPopup = !isPopup" type="button" class="absolute right-4 top-4 text-gray-400 hover:text-gray-500 sm:right-6 sm:top-8 md:right-6 md:top-6 lg:right-8 lg:top-8">
+              <button @click="closePopup" type="button" class="absolute right-4 top-4 text-gray-400 hover:text-gray-500 sm:right-6 sm:top-8 md:right-6 md:top-6 lg:right-8 lg:top-8">
                 <span class="sr-only">Close</span>
                 <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
