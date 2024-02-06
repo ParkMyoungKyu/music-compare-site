@@ -11,7 +11,7 @@ export enum MusicSiteName {
 }
 
 export class MusicSiteList {
-  private static musicSite: MusicSiteName;
+  static musicSite: MusicSiteName;
   readonly headerTitle = new Header();
   render(): string {
     return `

@@ -10,14 +10,14 @@ import {
 
 export class Top100Music {
   musicSite: MusicSiteList = new MusicSiteList();
-  musicCategory: number = 1; // 카테고리 id
+  static musicCategory: number = 1; // 카테고리 id
   musicView: number = 20; // 처음 보여줄 리스트 갯수
 
   top100MusicInit(): void {
     this.logText('top100MusicInit');
-    console.log(this.musicCategory);
+    console.log(Top100Music.musicCategory);
     const thisMusicSite: MusicSiteName = this.musicSite.getMusicSite();
-    const thisCategory: number = this.musicCategory;
+    const thisCategory: number = Top100Music.musicCategory;
 
     let callUrl: string = ''; // axios 호출 url
 
@@ -125,7 +125,7 @@ export class Top100Music {
       buttonTag.setAttribute('type', 'button');
       buttonTag.setAttribute('value', `${value.id}`);
       buttonTag.addEventListener('click', () => {
-        this.musicCategory = value.id;
+        Top100Music.musicCategory = value.id;
         this.changeCategory(value.id);
       });
 
@@ -188,7 +188,7 @@ export class Top100Music {
   changeCategory(id: number) {
     select('.moreOverAlert').setAttribute('x-show', 'false');
 
-    this.musicCategory = id;
+    Top100Music.musicCategory = id;
     this.musicView = 20;
 
     this.top100MusicInit();
