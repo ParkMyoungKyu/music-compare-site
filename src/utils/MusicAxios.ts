@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import { albumInfoRes, recentAlbumResData } from '../models/RecentAlbum';
 import { top100AlbumResData, top100Category } from '../models/Top100Album';
-import { genreList } from '../models/GenreList';
+import { genreAlbumResData, genreList } from '../models/GenreList';
 
 // 최신 앨범 목록보기 API 호출
 export function RecentAlbumAxios(
@@ -52,7 +52,7 @@ export function GenreListAxios(url: string): Promise<AxiosResponse<genreList>> {
 // 선택 장르 리스트 가져오기
 export function GenreAlbumListAxios(
   url: string,
-): Promise<AxiosResponse<genreList>> {
+): Promise<AxiosResponse<genreAlbumResData>> {
   console.log('-------- GenreAlbumListAxios --------');
   return axios.get(url);
 }

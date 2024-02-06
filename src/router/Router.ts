@@ -102,7 +102,8 @@ export class Router {
       const top100Music = new Top100Music();
       top100Music.moreTop100();
     } else if (path == '/genre') {
-      console.log(path);
+      const genreAlbumList = new GenreMusic();
+      genreAlbumList.moreGenreList();
     }
   }
 

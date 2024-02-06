@@ -1,11 +1,17 @@
 import { MusicSiteList, MusicSiteName } from '../../components/MusicSiteList';
-import { genreList, genreListInfo } from '../../models/GenreList';
+import {
+  genreAlbumResData,
+  genreAlbumResDataList,
+  genreList,
+  genreListInfo,
+} from '../../models/GenreList';
 import { select, tagCreat } from '../../utils/ElementUtils';
 import { GenreAlbumListAxios, GenreListAxios } from '../../utils/MusicAxios';
 
 export class GenreMusic {
   musicSite: MusicSiteList = new MusicSiteList();
-
+  static thisGenre: number = 1;
+  static musicView: number = 20; // 처음 보여줄 리스트 갯수
   genreMusicInit() {
     const thisMusicSite: MusicSiteName = this.musicSite.getMusicSite();
 
@@ -29,8 +35,10 @@ export class GenreMusic {
 
   // 장르 목록 API 호출
   async setupData(callUrl: string) {
-    const { data } = await GenreListAxios(callUrl);
-    this.setTop100AlbumList(data);
+    const { data: genreList } = await GenreListAxios(callUrl);
+    this.setTop100AlbumList(genreList);
+
+    this.genreAlbumList(GenreMusic.thisGenre);
   }
 
   // 장르 목록 데이터 셋팅
@@ -45,13 +53,15 @@ export class GenreMusic {
 
       aTag.innerHTML = `
           <button id="${value.id}" class="group">
-            <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
-              <img src="${value.imgList[0].url}" alt="Tall slender porcelain bottle with natural clay textured body and cork stopper." class="h-full w-full object-cover object-center group-hover:opacity-75">
+            <div class="w-full overflow-hidden rounded-lg bg-gray-200">
+              <img src="${value.imgList[0].url}" class="h-full w-full object-cover object-center group-hover:opacity-75" width="158" height="48">
             </div>
           </button>
           `;
 
       aTag.addEventListener('click', () => {
+        GenreMusic.musicView = 20;
+        GenreMusic.thisGenre = value.id;
         this.genreAlbumList(value.id);
       });
 
@@ -76,18 +86,38 @@ export class GenreMusic {
       <ul id="GenreAlbumList" role="list" >
       
       </ul>
-  </div>
+      <div class="my-8 flex flex-wrap justify-center gap-4">
+        <button id="moreGenreList" class="inline-block w-64 rounded bg-red-600 px-8 py-3 text-sm font-medium text-white transition hover:scale-105 hover:shadow-xl focus:outline-none focus:ring active:bg-red-600">
+          더보기
+        </button>
+      </div>
+    </div>
   `;
+  }
+
+  // 더보기
+  moreGenreList() {
+    this.logText('moreGenreList');
+    const moreBtn = select('#moreGenreList');
+
+    moreBtn.addEventListener('click', () => {
+      if (GenreMusic.musicView === 100) {
+        select('.moreOverAlert').setAttribute('x-show', 'true');
+      } else {
+        GenreMusic.musicView += 20;
+        this.genreAlbumList(GenreMusic.thisGenre);
+      }
+    });
   }
 
   // 장르 목록 리스트 API 호출
   async genreAlbumList(id: number) {
-    const callUrl = `https://www.music-flo.com/api/meta/v1/chart/track/${id}`;
+    const callUrl = `https://www.music-flo.com/api/meta/v1/chart/track/${id}?size=${GenreMusic.musicView}`;
     const { data } = await GenreAlbumListAxios(callUrl);
     this.setupListData(data);
   }
 
-  setupListData(data: any) {
+  setupListData(data: genreAlbumResData) {
     console.log(data);
     const genreAlbum = data.data.trackList;
     const genreTitle = data.data.name;
@@ -97,7 +127,7 @@ export class GenreMusic {
     const h2Tag = select<HTMLHtmlElement>('#GenreTitle');
     h2Tag.innerText = genreTitle;
 
-    genreAlbum.forEach((value: any) => {
+    genreAlbum.forEach((value: genreAlbumResDataList, index: number) => {
       const liTag = tagCreat('li');
       liTag.setAttribute(
         'class',
@@ -108,7 +138,7 @@ export class GenreMusic {
               <div class="flex flex-col ml-3 min-w-0">
                 <div class="flex">
                   <h5 class="flex items-center font-medium text-gray-300 mr-6">
-                  
+                  ${index + 1}
                   </h5>
                 </div>
               </div>
