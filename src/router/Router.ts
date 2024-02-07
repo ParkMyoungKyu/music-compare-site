@@ -81,8 +81,11 @@ export class Router {
     footerDiv.innerHTML = footer.render();
 
     // 공통 컴포넌트들의 이벤트 랜더링
+    console.log('0101');
     header.headerMoveEvent();
+    console.log('0102');
     musicSiteList.musicSiteMoveEvent();
+    console.log('0103');
   }
 
   // Header,MusicSiteList,Footer 제거

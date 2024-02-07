@@ -18,15 +18,15 @@ export class GenreMusic {
     let callUrl: string = ''; // axios 호출 url
 
     callUrl = `https://www.music-flo.com/api/personal/v1/preferences/genres`;
-    if (thisMusicSite === MusicSiteName.melon) {
+    if (thisMusicSite === MusicSiteName.Melon) {
       this.logText('melon Start');
-    } else if (thisMusicSite === MusicSiteName.genie) {
+    } else if (thisMusicSite === MusicSiteName.Genie) {
       this.logText('genie Start');
-    } else if (thisMusicSite === MusicSiteName.flo) {
+    } else if (thisMusicSite === MusicSiteName.FLO) {
       this.logText('flo Start');
-    } else if (thisMusicSite === MusicSiteName.vibe) {
+    } else if (thisMusicSite === MusicSiteName.Vibe) {
       this.logText('vibe Start');
-    } else if (thisMusicSite === MusicSiteName.bugs) {
+    } else if (thisMusicSite === MusicSiteName.Bugs) {
       this.logText('bugs Start');
     }
 

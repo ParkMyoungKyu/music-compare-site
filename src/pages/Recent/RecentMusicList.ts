@@ -30,17 +30,17 @@ export class RecentMusic {
     let callUrl: string = ''; // axios 호출 url
 
     callUrl = this.FloecentUrl(chartGbn);
-    if (thisMusicSite === MusicSiteName.melon) {
+    if (thisMusicSite === MusicSiteName.Melon) {
       this.log('melon Start');
-    } else if (thisMusicSite === MusicSiteName.genie) {
+    } else if (thisMusicSite === MusicSiteName.Genie) {
       this.log('genie Start');
-    } else if (thisMusicSite === MusicSiteName.flo) {
+    } else if (thisMusicSite === MusicSiteName.FLO) {
       this.log('flo Start');
       callUrl = this.FloecentUrl(chartGbn);
-    } else if (thisMusicSite === MusicSiteName.vibe) {
+    } else if (thisMusicSite === MusicSiteName.Vibe) {
       this.log('vibe Start');
       callUrl = this.VibeRecentUrl(chartGbn);
-    } else if (thisMusicSite === MusicSiteName.bugs) {
+    } else if (thisMusicSite === MusicSiteName.Bugs) {
       this.log('bugs Start');
     }
 
