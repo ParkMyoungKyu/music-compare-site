@@ -8,9 +8,19 @@ import {
 import { select, tagCreat } from '../../utils/ElementUtils';
 import { GenreAlbumListAxios, GenreListAxios } from '../../utils/MusicAxios';
 
+import Alpine from 'alpinejs';
+Alpine.data('artistInfo', val => ({
+  openPopup: false,
+  value: val,
+  artistInfoOpen(v: number) {
+    alert(v);
+  },
+  artistInfoClose() {},
+}));
+
 export class GenreMusic {
   musicSite: MusicSiteList = new MusicSiteList();
-  static thisGenre: number = 1;
+  static thisGenre: number = 3550;
   static musicView: number = 20; // 처음 보여줄 리스트 갯수
   genreMusicInit() {
     const thisMusicSite: MusicSiteName = this.musicSite.getMusicSite();
@@ -76,12 +86,12 @@ export class GenreMusic {
     <div class="bg-white">
       <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-8 lg:max-w-7xl lg:px-8">
         <h2 class="sr-only">GenreMusic</h2>
-        <div id="generList" class="grid grid-cols-5 sm:grid-cols-5 lg:grid-cols-5 xl:grid-cols-5 gap-x-6 gap-y-10 xl:gap-x-8">
+        <div id="generList" class="grid grid-cols-5 sm:grid-cols-5 lg:grid-cols-10 xl:grid-cols-10 gap-x-6 gap-y-10 xl:gap-x-8">
 
         </div>
       </div>
     </div>
-    <div class="divide-y divide-gray-100 mx-auto max-w-2xl px-4 py-8 sm:px-6 sm:py-8 lg:max-w-7xl lg:px-8">
+    <div x-data="artistInfo" class="divide-y divide-gray-100 mx-auto max-w-2xl px-4 py-8 sm:px-6 sm:py-8 lg:max-w-7xl lg:px-8">
       <h4 id="GenreTitle" class="text-center mb-8 text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl"></h1>
       <ul id="GenreAlbumList" role="list" >
       
@@ -155,7 +165,7 @@ export class GenreMusic {
               </div>
               <div class="flex flex-col ml-3 min-w-0">
                 <div class="flex">
-                  <h5 class="flex items-center font-medium text-gray-300 mr-2">
+                  <h5 @click="artistInfoOpen(3)" class="flex items-center font-medium text-gray-300 mr-2">
                      ${value.artistList[0].name}
                   </h5>
                   <div class="flex">

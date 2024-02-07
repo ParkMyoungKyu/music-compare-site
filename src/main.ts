@@ -1,10 +1,6 @@
 // tailwind import
 import './styles/tailwind.css';
 
-// Alpine import
-import Alpine from 'alpinejs';
-Alpine.start();
-
 import Router from './router/Router';
 import { select } from './utils/ElementUtils';
 
