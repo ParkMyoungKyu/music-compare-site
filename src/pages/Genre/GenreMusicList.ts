@@ -1,4 +1,6 @@
 import { MusicSiteList, MusicSiteName } from '../../components/MusicSiteList';
+import { ArtistInfo } from '../../components/ArtistInfo';
+
 import {
   genreAlbumResData,
   genreAlbumResDataList,
@@ -13,7 +15,7 @@ Alpine.data('artistInfo', val => ({
   openPopup: false,
   value: val,
   artistInfoOpen(v: number) {
-    alert(v);
+    new ArtistInfo(v);
   },
   artistInfoClose() {},
 }));
@@ -162,10 +164,10 @@ export class GenreMusic {
                   <div class="font-medium leading-none text-gray-100">${value.name}</div>
                   <p class="text-sm text-gray-500 leading-none mt-1 truncate">${value.album.title}</p>
                 </div>
-              </div>
+              </div>  
               <div class="flex flex-col ml-3 min-w-0">
                 <div class="flex">
-                  <h5 @click="artistInfoOpen(3)" class="flex items-center font-medium text-gray-300 mr-2">
+                  <h5 @click="artistInfoOpen(${value.artistList[0].id})" class="flex items-center font-medium text-gray-300 mr-2">
                      ${value.artistList[0].name}
                   </h5>
                   <div class="flex">

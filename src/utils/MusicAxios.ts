@@ -1,4 +1,9 @@
 import axios, { AxiosResponse } from 'axios';
+import {
+  artistAlbumResData,
+  artistInfoResData,
+  artistMusicResData,
+} from '../models/ArtistInfoModel';
 import { albumInfoRes, recentAlbumResData } from '../models/RecentAlbum';
 import { top100AlbumResData, top100Category } from '../models/Top100Album';
 import { genreAlbumResData, genreList } from '../models/GenreList';
@@ -54,5 +59,31 @@ export function GenreAlbumListAxios(
   url: string,
 ): Promise<AxiosResponse<genreAlbumResData>> {
   console.log('-------- GenreAlbumListAxios --------');
+  return axios.get(url);
+}
+
+// 가수 정보 가져오기
+// https://www.music-flo.com/api/meta/v1/artist/${id}
+export function ArtistInfoAxios(
+  url: string,
+): Promise<AxiosResponse<artistInfoResData>> {
+  console.log('-------- ArtistInfoAxios --------');
+  return axios.get(url);
+}
+
+// 가수 곡 정보 가져오기
+// https://www.music-flo.com/api/meta/v1/artist/${id}/track?page=1&size=50&sortType=POPULARITY&roleType=ALL
+export function ArtistMusicAxios(
+  url: string,
+): Promise<AxiosResponse<artistMusicResData>> {
+  console.log('-------- ArtistMusicAxios --------');
+  return axios.get(url);
+}
+// 가수 앨범 정보 가져오기
+// https://www.music-flo.com/api/meta/v1/artist/${id}/album?page=1&size=50&sortType=RECENT&roleType=RELEASE
+export function ArtistAlbumAxios(
+  url: string,
+): Promise<AxiosResponse<artistAlbumResData>> {
+  console.log('-------- ArtistAlbumAxios --------');
   return axios.get(url);
 }
