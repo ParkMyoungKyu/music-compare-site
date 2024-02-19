@@ -85,9 +85,9 @@ export class RecentMusicDetail {
                 </svg>
               </button>
     
-              <div class="grid w-full grid-cols-1 items-start gap-x-6 gap-y-8 sm:grid-cols-12 lg:gap-x-8">
+              <div class="grid w-full grid-cols-1 items-start gap-x-6 gap-y-8 sm:grid-cols-11 lg:gap-x-8">
                 <div id="titleImg" class="aspect-h-2 aspect-w-2 overflow-hidden rounded-lg bg-gray-100 shadow-2xl sm:col-span-4 lg:col-span-5"></div>
-                <div class="sm:col-span-8 lg:col-span-7">
+                <div class="sm:col-span-6 lg:col-span-5">
                   <h2 id="albumType" class="text-sm font-bold text-gray-400 sm:pr-12"></h2>
                   <h2 id="albumName" class="text-2xl font-bold text-gray-900 sm:pr-12"></h2>
 
@@ -127,7 +127,7 @@ export class RecentMusicDetail {
                             <p class="text-sm font-medium leading-6 text-gray-900">곡/앨범</p>
                           </div>
                         </div>
-                        <div class="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
+                        <div class="hidden shrink-0 sm:flex sm:flex-col sm:items-end mr-8">
                           <p class="text-sm leading-6 text-gray-900">아티스트</p>
                         </div>
                       </li>
@@ -160,7 +160,7 @@ function setAlbumInfo(data: albumInfoRes) {
   const albumList = data.data.list;
 
   const titleAlbum = albumList.filter(value => value.titleYn == 'Y');
-  const titleAlbumInfo = titleAlbum[0];
+  const titleAlbumInfo = titleAlbum.length > 0 ? titleAlbum[0] : albumList[0];
 
   // 이미지 초기화
   const titleImg = select<HTMLDivElement>('#titleImg');
@@ -246,15 +246,20 @@ function albumMusicList(data: Array<albumInfoDetail>) {
     divTag01.appendChild(divTag01_1);
     liTag.appendChild(divTag01);
 
-    const divTag02 = tagCreat('li');
+    const divTag02 = tagCreat('div');
     divTag02.setAttribute(
       'class',
-      'hidden shrink-0 sm:flex sm:flex-col sm:items-end',
+      'hidden shrink-0 sm:flex sm:flex-col sm:items-end mr-10',
     );
 
     const pTag02_01 = tagCreat('p');
     pTag02_01.setAttribute('class', 'text-sm leading-6 text-gray-900');
-    pTag02_01.innerText = value.artistList[0].name;
+    let artistName = '';
+    for (const i in value.artistList) {
+      artistName +=
+        i == '0' ? value.artistList[i].name : ' & ' + value.artistList[i].name;
+    }
+    pTag02_01.innerText = artistName;
 
     const pTag02_02 = tagCreat('p');
     pTag02_02.setAttribute('class', 'mt-1 text-xs leading-5 text-gray-500');
