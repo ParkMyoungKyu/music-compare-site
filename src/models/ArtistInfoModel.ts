@@ -10,7 +10,10 @@ export interface artistInfoResData extends AxiosResCommon {
     genderCdStr: string;
     hasVideoYn: string;
     id: number;
-    imgList: object;
+    imgList: Array<{
+      size: number;
+      url: string;
+    }>;
     likeYn: string;
     name: string;
     video: {
@@ -89,7 +92,7 @@ export interface artistAlbumResData extends AxiosResCommon {
         albumTypeStr: string;
         artistList: [{ id: number; name: string }];
         id: number;
-        imgList: [{ size: number; url: string }];
+        imgList: Array<{ size: number; url: string }>;
         releaseYmd: string;
         representationArtist: { id: number; name: string };
         title: string;

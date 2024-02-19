@@ -11,13 +11,18 @@ import { select, tagCreat } from '../../utils/ElementUtils';
 import { GenreAlbumListAxios, GenreListAxios } from '../../utils/MusicAxios';
 
 import Alpine from 'alpinejs';
-Alpine.data('artistInfo', val => ({
-  openPopup: false,
-  value: val,
+const ArtistInfoComponent = new ArtistInfo();
+
+Alpine.data('artistInfo', () => ({
+  artistOpenPopup: false,
   artistInfoOpen(v: number) {
-    new ArtistInfo(v);
+    this.artistOpenPopup = true;
+    ArtistInfoComponent.getArtistInfo(v);
   },
-  artistInfoClose() {},
+
+  artistInfoClose() {
+    this.artistOpenPopup = false;
+  },
 }));
 
 export class GenreMusic {
@@ -84,6 +89,7 @@ export class GenreMusic {
   render(): string {
     this.genreMusicInit();
     this.logText('render');
+
     return `
     <div class="bg-white">
       <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-8 lg:max-w-7xl lg:px-8">
@@ -103,6 +109,7 @@ export class GenreMusic {
           더보기
         </button>
       </div>
+      ${ArtistInfoComponent.render()}
     </div>
   `;
   }
