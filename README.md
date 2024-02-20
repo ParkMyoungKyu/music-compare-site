@@ -40,6 +40,13 @@
 7. tailwind, postcss 추가
     - 개별로 실행 후 webpack으로 한번에 돌리는 방향으로 수정
     - shadcn/ui 도 점진적으로 하나씩 붙여볼 예정
+
+   tailwidn css 반응형 정리(width)
+    - sm : 640 px
+    - md : 768 px
+    - lg : 1024 px
+    - xl : 1280 px
+    - 2xl : 1536 px
 ---
 
 #### 참고 자료
@@ -48,3 +55,7 @@
 - [VIBE](https://vibe.naver.com/chart)
 - [genie](https://genie.co.kr/chart/top200)
 - [벅스뮤직](https://music.bugs.co.kr/chart)
+
+---
+#### 개발 중 이슈 사항
+- 다른 음원 사이트의 노래 목록을 갖고오려고 했으나 FLO 와 같이 단순한 구조가 아닌것으로 파악되어 우선적으로 FLO 차트를 우선으로 개발 진행
