@@ -15,9 +15,9 @@ const ArtistInfoComponent = new ArtistInfo();
 
 Alpine.data('artistInfo', () => ({
   artistOpenPopup: false,
-  artistInfoOpen(v: number) {
+  artistInfoOpen(id: number) {
     this.artistOpenPopup = true;
-    ArtistInfoComponent.getArtistInfo(v);
+    ArtistInfoComponent.getArtistInfo(id);
   },
 
   artistInfoClose() {

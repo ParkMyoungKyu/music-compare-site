@@ -25,7 +25,7 @@ export class ArtistAlbum {
   setArtistAlbum(artistInfo: artistAlbumResData) {
     console.log(artistInfo.data);
     const divTag = select<HTMLDivElement>('#albumList');
-
+    divTag.innerHTML = '';
     const artistAlbumList = artistInfo.data.list;
 
     artistAlbumList.forEach(value => {
@@ -37,18 +37,17 @@ export class ArtistAlbum {
             : ' & ' + value.artistList[i].name;
       }
       divTag.innerHTML += `
-        <div class="grid grid-cols-2 gap-x-14 gap-y-14 mt-10">
-                <div class="w-48 h-48 sm:mb-0 mb-3">
-                    <img src="${value.imgList[5].url}" alt="${value.title} 앨범 이미지" class="h-full w-full object-cover rounded-2xl">
-                </div>
-                <div class="font-semibold text-sm text-slate-600 grid gap-1.5 grid-cols-2">
-                <h4 class="mr-1">${value.title}</h4>
-                <h5 class="mr-1">${artistName}</h4>
-                <h5 class="mr-1">${value.albumTypeStr}</h4>
-                <h5 class="mr-1">${dataUtil.dateformat(value.releaseYmd, DateFormat.yyyymmdd)}</h4>
-              </div>
-            </div>
-
+        <div class="grid lg:grid-cols-2 sm:grid-cols-1 lg:gap-14 sm:gap-7 mt-10">
+          <div class="size-20 lg:size-48 sm:size-36 sm:mb-0 mb-3">
+              <img src="${value.imgList[5].url}" alt="${value.title} 앨범 이미지" class="h-full w-full object-cover rounded-2xl shadow-xl">
+          </div>
+          <div class="font-semibold text-sm text-slate-600 grid gap-1.5">
+            <p class="sm:text-sm lg:text-base font-semibold leading-6 text-gray-900 my-auto">${value.title}</p>
+            <p class="sm:text-xs lg:text-sm truncate leading-5 text-gray-500">${artistName}</p>
+            <p class="sm:text-sm lg:text-sm font-semibold leading-6 text-gray-900 my-auto">${value.albumTypeStr}</p>
+            <p class="sm:text-xs lg:text-xs truncate leading-5 text-gray-500">${dataUtil.dateformat(value.releaseYmd, DateFormat.yyyymmdd)}</p>
+          </div>
+        </div>
         `;
     });
   }

@@ -3,6 +3,7 @@ import { select } from '../utils/ElementUtils';
 import { ArtistMusicAxios } from '../utils/MusicAxios';
 import { DateFormat, DateUtils } from '../utils/DateUtils';
 const dataUtil = new DateUtils();
+
 export class ArtistMusic {
   async getArtistMusic(id: number) {
     const { data: artistMusic } = await this.artistMusicReq(id);
@@ -25,6 +26,8 @@ export class ArtistMusic {
     console.log(artistInfo.data);
     const artistMusicList = artistInfo.data.list;
     const ulTag = select<HTMLUListElement>('#musicList');
+    ulTag.innerHTML = '';
+
     artistMusicList.forEach(value => {
       let artistName = '';
       for (const i in value.artistList) {

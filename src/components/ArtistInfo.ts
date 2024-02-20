@@ -26,8 +26,11 @@ export class ArtistInfo {
 
   async getArtistInfo(id: number) {
     ArtistInfo.artistId = id;
-
     this.logText('getArtistInfo');
+
+    const element = document.getElementById('music');
+    if (element) element.dispatchEvent(new Event('click'));
+
     const { data: artistInfo } = await this.artistInfoReq(id);
 
     this.setArtistInfo(artistInfo);
@@ -121,8 +124,8 @@ export class ArtistInfo {
               </button>
     
               <div class="grid w-full grid-cols-1 items-start gap-x-6 gap-y-8 sm:grid-cols-11 lg:gap-x-8">
-                <div class="w-60 h-60 overflow-hidden rounded-lg bg-gray-100 shadow-2xl sm:col-span-3 lg:col-span-3">
-                  <img id="artistImg" class="w-60 !h-60"/>
+                <div class="!w-60 h-60 overflow-hidden rounded-lg bg-gray-100 shadow-2xl sm:col-span-4 lg:col-span-3">
+                  <img id="artistImg"/>
                 </div>
                 <div class="my-auto sm:col-span-6 lg:col-span-5">
                   <h2 id="artistName" class="text-2xl font-bold text-gray-900 sm:pr-12"></h2>
@@ -146,11 +149,11 @@ export class ArtistInfo {
                 
                 <div x-data="artistDetail" class="mt-10 sm:col-start-1 sm:col-end-12 lg:col-start-1 lg:col-end-12">
                   <fieldset class="mt-4">
-                    <div class="grid grid-cols-8 gap-4">
+                    <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-8 gap-4">
 
                       <!-- Active: "ring-2 ring-indigo-500" -->
                       <label class="group relative flex items-center justify-center rounded-md border py-3 px-4 text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 cursor-pointer bg-white text-gray-900 shadow-sm">
-                        <input @click="artistDetailOpen('music')" type="radio" name="size-choice" value="music" class="sr-only" aria-labelledby="size-choice-0-label">
+                        <input id="music" @click="artistDetailOpen('music')" type="radio" name="size-choice" value="music" class="sr-only" aria-labelledby="size-choice-0-label">
                         <span id="size-choice-0-label">곡</span>
                         <!--
                           Active: "border", Not Active: "border-2"
@@ -161,7 +164,7 @@ export class ArtistInfo {
 
                       <!-- Active: "ring-2 ring-indigo-500" -->
                       <label class="group relative flex items-center justify-center rounded-md border py-3 px-4 text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 cursor-pointer bg-white text-gray-900 shadow-sm">
-                        <input @click="artistDetailOpen('album')" type="radio" name="size-choice" value="album" class="sr-only" aria-labelledby="size-choice-1-label">
+                        <input id="album" @click="artistDetailOpen('album')" type="radio" name="size-choice" value="album" class="sr-only" aria-labelledby="size-choice-1-label">
                         <span id="size-choice-1-label">앨범</span>
                         <!--
                           Active: "border", Not Active: "border-2"
